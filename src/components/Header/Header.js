@@ -1,9 +1,9 @@
 import React from 'react';
-import './header.css';
 import avatar from '../../assets/avatar.png';
 import profiles from '../../assets/profiles.png';
 import dashboard from '../../assets/dashboard.png';
 import users from '../../assets/users.png';
+import './header.css';
 
 const Header = () => {
   return (
