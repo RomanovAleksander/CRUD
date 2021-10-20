@@ -35,8 +35,15 @@
 }
 
 .nav-menu .nav-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0 20px 0 20px;
   cursor: pointer;
+}
+
+.nav-menu .nav-button img {
+  margin-left: 11px;
 }
 
 .log-out {
