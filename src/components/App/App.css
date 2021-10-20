@@ -2,8 +2,6 @@
   position: relative;
   width: 100%;
   max-width: 1920px;
-  height: 100vh;
   display: block;
-  background-color: #F7F7FC;
   margin: 0 auto;
 }
