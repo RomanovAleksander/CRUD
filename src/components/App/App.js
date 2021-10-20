@@ -11,7 +11,7 @@ function App() {
     //   <Header />
     //   <Profiles />
     // </div>
-    <LoginForm isSignIn={true}/>
+    <LoginForm isSignIn={false}/>
   );
 }
 

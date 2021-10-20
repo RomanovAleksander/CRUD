@@ -43,12 +43,12 @@ const LoginForm = ({ isSignIn }) => {
           <input type="password" name="password" onChange={handleChange}/>
         </label>
         {!isSignIn && (
-          <label>
+          <label className="isAdmin">
             <input type="checkbox" name="isAdmin" onChange={handleChange}/>
             is admin
           </label>
         )}
-        <button>{isSignIn ? 'Sign In' : 'Sign Up'}</button>
+        <button className="form-submit-btn">{isSignIn ? 'Sign In' : 'Sign Up'}</button>
       </form>
     </div>
   )
