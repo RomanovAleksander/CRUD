@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <header className="header">
       <div className="avatar-block">
-        <img className="avatar" style={{
+        <span className="avatar" style={{
           backgroundImage: `url(${avatar})`
         }}/>
         <span className="name">1White</span>
