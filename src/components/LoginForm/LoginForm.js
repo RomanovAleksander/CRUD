@@ -1,12 +1,32 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import {useHttp} from "../../hooks/http.hook";
+import 'react-toastify/dist/ReactToastify.css';
 import './loginForm.css';
 
 const LoginForm = ({ isSignIn }) => {
-  const [state, setState] = useState({
+  const defaultState = {
     username: '',
     email: '',
-    password: ''
-  });
+    password: '',
+    isAdmin: false
+  };
+  const {loading, request, error, clearError} = useHttp();
+  const [state, setState] = useState(defaultState);
+
+  useEffect(() => {
+    toast.error(error, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark"
+    });
+    clearError();
+  }, [error, clearError])
 
   const handleChange = (event) => {
     setState(prevState => {
@@ -17,17 +37,31 @@ const LoginForm = ({ isSignIn }) => {
     });
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(state);
+  const registerHandler = async () => {
+    try {
+      const data = await request('/api/auth/register', 'POST', {...state});
+      toast.success(data.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark"
+      });
+
+    } catch (e) {}
   }
+
 
   return (
     <div className="form-wrapper">
+      <ToastContainer />
       <div className="form-title">
         {isSignIn ? 'Sign in' : 'Create your account'}
       </div>
-      <form className="form" onSubmit={handleSubmit}>
+      <div className="form">
         {!isSignIn && (
           <label>
             Username
@@ -36,7 +70,7 @@ const LoginForm = ({ isSignIn }) => {
         )}
         <label>
           Email
-          <input type="email" name="email" onChange={handleChange}/>
+          <input type="text" name="email" onChange={handleChange}/>
         </label>
         <label>
           Password
@@ -48,8 +82,13 @@ const LoginForm = ({ isSignIn }) => {
             is admin
           </label>
         )}
-        <button className="form-submit-btn">{isSignIn ? 'Sign In' : 'Sign Up'}</button>
-      </form>
+        <button className="form-submit-btn"
+                onClick={registerHandler}
+                disabled={loading}
+        >
+          {isSignIn ? 'Sign In' : 'Sign Up'}
+        </button>
+      </div>
     </div>
   )
 }
