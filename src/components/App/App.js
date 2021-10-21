@@ -3,6 +3,7 @@ import {useRoutes} from "../../routes";
 import {useAuth} from "../../hooks/auth.hook";
 import {AuthContext} from "../../context/AuthContext";
 import './App.css';
+import Header from "../Header/Header";
 
 function App() {
   const { token, login, logout, userId } = useAuth();
@@ -13,6 +14,7 @@ function App() {
       token, login, logout, userId, isAuthenticated
     }}>
       <Router>
+        { isAuthenticated && <Header />}
         {routes}
       </Router>
     </AuthContext.Provider>
