@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import {useHttp} from "../../hooks/http.hook";
+import {AuthContext} from "../../context/AuthContext";
 import 'react-toastify/dist/ReactToastify.css';
 import './loginForm.css';
 
@@ -11,11 +12,17 @@ const LoginForm = ({ isSignIn }) => {
     password: '',
     isAdmin: false
   };
+  const auth = useContext(AuthContext);
   const {loading, request, error, clearError} = useHttp();
   const [state, setState] = useState(defaultState);
 
   useEffect(() => {
-    toast.error(error, {
+    showToast(error, 'error');
+    clearError();
+  }, [error, clearError])
+
+  const showToast = (message, type) => {
+    toast[`${type}`](message, {
       position: "top-right",
       autoClose: 2000,
       hideProgressBar: false,
@@ -25,8 +32,7 @@ const LoginForm = ({ isSignIn }) => {
       progress: undefined,
       theme: "dark"
     });
-    clearError();
-  }, [error, clearError])
+  }
 
   const handleChange = (event) => {
     setState(prevState => {
@@ -37,23 +43,21 @@ const LoginForm = ({ isSignIn }) => {
     });
   }
 
-  const registerHandler = async () => {
+  const submitHandler = async (e) => {
+    const target = e.target.textContent;
     try {
-      const data = await request('/api/auth/register', 'POST', {...state});
-      toast.success(data.message, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark"
-      });
-
+      if (target === 'Sign Up') {
+        const data = await request('/api/auth/register', 'POST', {...state});
+        showToast(data.message, 'success');
+      } else {
+        const data = await request('/api/auth/login', 'POST', {
+          email: state.email,
+          password: state.password
+        });
+        auth.login(data.token, data.userId)
+      }
     } catch (e) {}
   }
-
 
   return (
     <div className="form-wrapper">
@@ -83,7 +87,7 @@ const LoginForm = ({ isSignIn }) => {
           </label>
         )}
         <button className="form-submit-btn"
-                onClick={registerHandler}
+                onClick={submitHandler}
                 disabled={loading}
         >
           {isSignIn ? 'Sign In' : 'Sign Up'}

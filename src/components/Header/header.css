@@ -42,6 +42,14 @@
   cursor: pointer;
 }
 
+.nav-menu .nav-button a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: rgba(20, 20, 43, 1);
+}
+
 .nav-menu .nav-button img {
   margin-left: 11px;
 }
@@ -49,4 +57,9 @@
 .log-out {
   margin-left: 80px;
   cursor: pointer;
+}
+
+.log-out a {
+  text-decoration: none;
+  color: rgba(20, 20, 43, 1);
 }

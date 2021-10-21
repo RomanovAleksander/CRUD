@@ -1,11 +1,22 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {NavLink, useHistory} from "react-router-dom";
 import avatar from '../../assets/avatar.png';
 import profiles from '../../assets/profiles.png';
 import dashboard from '../../assets/dashboard.png';
 import users from '../../assets/users.png';
 import './header.css';
+import {AuthContext} from "../../context/AuthContext";
 
 const Header = () => {
+  const history = useHistory();
+  const auth = useContext(AuthContext);
+
+  const logoutHandler = (event) => {
+    event.preventDefault();
+    auth.logout();
+    history.push('/');
+  }
+
   return (
     <header className="header">
       <div className="avatar-block">
@@ -17,19 +28,27 @@ const Header = () => {
       <div className="buttons-wrapper">
         <nav className="nav-menu">
           <div className="nav-button">
-            Profiles
-            <img src={profiles} alt="profiles logo"/>
+            <NavLink to="/profiles">
+              Profiles
+              <img src={profiles} alt="profiles logo"/>
+            </NavLink>
           </div>
           <div className="nav-button">
-            Dashboard
-            <img src={dashboard} alt="dashboard logo"/>
+            <NavLink to="/dashboard">
+              Dashboard
+              <img src={dashboard} alt="dashboard logo"/>
+            </NavLink>
           </div>
           <div className="nav-button">
-            Users
-            <img src={users} alt="users logo"/>
+            <NavLink to="/users">
+              Users
+              <img src={users} alt="users logo"/>
+            </NavLink>
           </div>
         </nav>
-        <div className="log-out">Log Out</div>
+        <div className="log-out">
+          <a href="/" onClick={logoutHandler}>Log Out</a>
+        </div>
       </div>
     </header>
   );
