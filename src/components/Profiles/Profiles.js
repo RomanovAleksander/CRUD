@@ -3,7 +3,7 @@ import './profiles.css';
 const Profiles = () => {
   return (
     <div className="content-wrapper">
-      <div className="page-title">Users:</div>
+      <div className="page-title">Profiles:</div>
       <div className="profiles-info">
         <div className="profiles-info__block">
           <p className="profile-title">Danylo Bilyi</p>
