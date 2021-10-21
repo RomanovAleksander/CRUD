@@ -1,0 +1,72 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  padding: 0 120px 0 120px;
+  margin-bottom: 60px;
+  background: #F7F7FC;
+  box-shadow: 0 8px 16px 0 rgba(17, 17, 17, 0.04);
+}
+
+.avatarContainer {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  display: block;
+  border-radius: 100px;
+  margin-right: 25px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.admin {
+  border: 1.5px solid #00BA88;
+}
+
+.user {
+  border: 1.5px solid #D6D8E7;
+}
+
+.buttons-wrapper {
+  display: flex;
+}
+
+.nav-menu {
+  display: flex;
+}
+
+.nav-menu .nav-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 20px 0 20px;
+  cursor: pointer;
+}
+
+.nav-menu .nav-button a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: rgba(20, 20, 43, 1);
+}
+
+.nav-menu .nav-button img {
+  margin-left: 11px;
+}
+
+.log-out {
+  margin-left: 80px;
+  cursor: pointer;
+}
+
+.log-out a {
+  text-decoration: none;
+  color: rgba(20, 20, 43, 1);
+}

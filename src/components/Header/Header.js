@@ -8,6 +8,8 @@ import users from '../../assets/users.png';
 import './header.css';
 import {AuthContext} from "../../context/AuthContext";
 
+import styles from './Header.module.scss';
+
 const Header = () => {
   const history = useHistory();
   const auth = useContext(AuthContext);
@@ -19,8 +21,8 @@ const Header = () => {
   }
 
   return (
-    <header className="header">
-      <div className="avatar-block">
+    <header className={styles.header}>
+      <div className={styles.avatarContainer}>
         <span className={`avatar ${auth.isAdmin ? 'admin' : 'user'}`}
               style={{
           backgroundImage: `url(${auth.isAdmin ? adminAvatar : userAvatar})`
