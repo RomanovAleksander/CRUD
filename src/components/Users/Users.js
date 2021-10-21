@@ -1,6 +1,17 @@
+import React, {useEffect} from 'react';
 import './users.css';
+import {useHttp} from "../../hooks/http.hook";
 
 const Users = () => {
+  const {request} = useHttp();
+
+  const getUsers = async () => {
+    try {
+        const data = await request('/api/auth/', 'GET');
+        console.log(data)
+    } catch (e) {}
+  }
+
   return (
     <div className="container">
       <div className="content-wrapper">

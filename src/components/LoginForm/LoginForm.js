@@ -92,13 +92,16 @@ const LoginForm = ({ isSignIn }) => {
             is admin
           </label>
         )}
-        <button className="form-submit-btn"
-                onClick={submitHandler}
-                disabled={loading}
-        >
-          {isSignIn ? 'Sign In' : 'Sign Up'}
-        </button>
-        <a href={`${!isSignIn ? '/' : '/signup'}`}>{!isSignIn ? 'Sign In' : 'Sign Up'}</a>
+        <div className="form-submit-buttons">
+          <button className="form-submit-btn"
+                  onClick={submitHandler}
+                  disabled={loading}
+          >
+            {isSignIn ? 'Sign In' : 'Sign Up'}
+          </button>
+          <span className="form-diving-line" />
+          <a href={`${!isSignIn ? '/' : '/signup'}`}>{!isSignIn ? 'Sign In' : 'Sign Up'}</a>
+        </div>
       </div>
     </div>
   )

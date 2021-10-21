@@ -55,7 +55,6 @@
   background: #EFF0F6;
   border-radius: 12px;
   border: none;
-  margin-top: 90px;
   font-weight: normal;
   font-size: 24px;
   letter-spacing: 0.75px;
@@ -76,3 +75,33 @@
   height: 6px;
   margin-right: 12px;
 }
+
+.form-submit-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-top: 90px;
+}
+
+.form-diving-line {
+  width: 0;
+  height: 100%;
+  border-right: 3px solid #D6D8E7;
+  border-radius: 15px;
+  margin: 0 15px 0 15px;
+}
+
+.form-submit-buttons a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-weight: normal;
+  font-size: 24px;
+  letter-spacing: 0.75px;
+  color: #4E4B66;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
