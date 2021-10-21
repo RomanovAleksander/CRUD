@@ -98,6 +98,7 @@ const LoginForm = ({ isSignIn }) => {
         >
           {isSignIn ? 'Sign In' : 'Sign Up'}
         </button>
+        <a href={`${!isSignIn ? '/' : '/signup'}`}>{!isSignIn ? 'Sign In' : 'Sign Up'}</a>
       </div>
     </div>
   )

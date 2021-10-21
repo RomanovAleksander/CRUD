@@ -38,6 +38,9 @@ export const useRoutes = (isAuthenticated, isAdmin, isSignIn) => {
       <Route path="/" exact>
         <AuthPage isSignIn={isSignIn}/>
       </Route>
+      <Route path="/signup" exact>
+        <AuthPage isSignIn={false}/>
+      </Route>
       <Redirect to="/" />
     </Switch>
   )
