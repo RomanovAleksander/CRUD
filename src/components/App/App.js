@@ -6,12 +6,13 @@ import './App.css';
 import Header from "../Header/Header";
 
 function App() {
-  const { token, login, logout, userId } = useAuth();
+  const { token, login, logout, userId, isAdmin } = useAuth();
   const isAuthenticated = !!token;
-  const routes = useRoutes(isAuthenticated, true, true)
+  const routes = useRoutes(isAuthenticated, isAdmin, true);
+
   return (
     <AuthContext.Provider value={{
-      token, login, logout, userId, isAuthenticated
+      token, login, logout, userId, isAuthenticated, isAdmin
     }}>
       <Router>
         { isAuthenticated && <Header />}

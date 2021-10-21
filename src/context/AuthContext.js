@@ -7,6 +7,6 @@ export const AuthContext = createContext({
   userId: null,
   login: noop,
   logout: noop,
-  isAdmin: false,
+  isAdmin: null,
   isAuthenticated: false
 })

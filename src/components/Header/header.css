@@ -19,11 +19,18 @@
   width: 48px;
   height: 48px;
   display: block;
-  border: 1.5px solid #00BA88;
   border-radius: 100px;
   margin-right: 25px;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.admin {
+  border: 1.5px solid #00BA88;
+}
+
+.user {
+  border: 1.5px solid #D6D8E7;
 }
 
 .buttons-wrapper {

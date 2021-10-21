@@ -43,6 +43,10 @@ const LoginForm = ({ isSignIn }) => {
     });
   }
 
+  const handleCheck = (event) => {
+    setState({ ...state, isAdmin: event.target.checked });
+  }
+
   const submitHandler = async (e) => {
     const target = e.target.textContent;
     try {
@@ -54,7 +58,7 @@ const LoginForm = ({ isSignIn }) => {
           email: state.email,
           password: state.password
         });
-        auth.login(data.token, data.userId)
+        auth.login(data.token, data.userId, data.isAdmin)
       }
     } catch (e) {}
   }
@@ -82,7 +86,9 @@ const LoginForm = ({ isSignIn }) => {
         </label>
         {!isSignIn && (
           <label className="isAdmin">
-            <input type="checkbox" name="isAdmin" onChange={handleChange}/>
+            <input type="checkbox" name="isAdmin"
+                   checked={state.isAdmin}
+                   onChange={handleCheck}/>
             is admin
           </label>
         )}
