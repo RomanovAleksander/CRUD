@@ -6,9 +6,10 @@ import {ModalContext} from "../../context/ModalContext";
 import Header from "../Header/Header";
 import {useState} from "react";
 import ModalForm from "../ModalForm/ModalForm";
+import {Loader} from "../Loader/Loader";
 
 function App() {
-  const { token, login, logout, userId, isAdmin } = useAuth();
+  const { token, login, logout, userId, isAdmin, ready } = useAuth();
   const isAuthenticated = !!token;
   const routes = useRoutes(isAuthenticated, isAdmin, true);
 
@@ -20,6 +21,10 @@ function App() {
     setModalData((prevState) => {
       return {isOpen: !prevState.isOpen}
     });
+  }
+
+  if (!ready) {
+    return <Loader />
   }
 
   return (

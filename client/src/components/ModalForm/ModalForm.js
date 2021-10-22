@@ -3,6 +3,7 @@ import styles from './ModalForm.module.scss';
 import {ModalContext} from "../../context/ModalContext";
 import {useHttp} from "../../hooks/http.hook";
 import {AuthContext} from "../../context/AuthContext";
+import {ToastContainer, toast} from "react-toastify";
 
 
 const ModalForm = () => {
@@ -16,6 +17,19 @@ const ModalForm = () => {
   const {request} = useHttp();
   const modal = useContext(ModalContext);
   const [profileData, setProfileData] = useState(defaultData);
+
+  const showToast = (message, type) => {
+    toast[`${type}`](message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark"
+    });
+  }
 
   const handleChange = (event) => {
     setProfileData(prevState => {
@@ -31,12 +45,13 @@ const ModalForm = () => {
       const data = await request('/api/profile/create', 'POST', {...profileData}, {
         Authorization: `Bearer ${auth.token}`
       });
-      console.log(data)
+      showToast(data.message, 'success');
     } catch (e) {}
   }
 
   return (
     <div className={styles.wrapper}>
+      <ToastContainer />
       <div className={styles.modal}>
         <div className={styles.labelWrapper}>
           <label>

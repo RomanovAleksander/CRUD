@@ -1,26 +1,50 @@
-import React, {useContext} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {ModalContext} from "../../context/ModalContext";
 import styles from './Profiles.module.scss';
+import {useHttp} from "../../hooks/http.hook";
+import {AuthContext} from "../../context/AuthContext";
 
 const Profiles = () => {
   const modal = useContext(ModalContext);
+  const auth = useContext(AuthContext);
+  const {request} = useHttp();
+  const [profiles, setProfiles] = useState([]);
+
+  const fetchProfiles = useCallback(async () => {
+    try {
+      const data = await request('/api/profile/', 'GET', null, {
+        Authorization: `Bearer ${auth.token}`
+      });
+      setProfiles(data);
+    } catch (e) {
+      console.log(e.message)
+    }
+  }, [request])
+
+  useEffect(() => {
+    fetchProfiles();
+  }, [fetchProfiles])
 
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.pageTitle}>Profiles:</div>
         <div className={styles.contentWrapper}>
-          <div className={styles.profile}>
-            <p className={styles.title}>Danylo Bilyi</p>
-            <p>male</p>
-            <p>25.03.2003</p>
-            <p>Kyiv</p>
-            <div className={styles.buttonsWrapper}>
-              <button className={styles.button}>edit</button>
-              <span className={styles.divingLine} />
-              <button className={styles.button}>delete</button>
-            </div>
-          </div>
+          {profiles.map((profile) => {
+            return (
+              <div className={styles.profile} key={profile._id}>
+                <p className={styles.title}>{profile.name}</p>
+                <p>{profile.gender}</p>
+                <p>{profile.birthdate}</p>
+                <p>{profile.city}</p>
+                <div className={styles.buttonsWrapper}>
+                  <button className={styles.button}>edit</button>
+                  <span className={styles.divingLine} />
+                  <button className={styles.button}>delete</button>
+                </div>
+              </div>
+            )
+          })}
           <div className={`${styles.profile} ${styles.pointer}`}
                onClick={() => modal() }
           >

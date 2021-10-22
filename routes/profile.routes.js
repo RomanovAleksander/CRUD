@@ -23,7 +23,8 @@ router.post('/create', auth, async (req, res) => {
 
 router.get('/', auth, async (req, res) => {
   try {
-    const profiles = await Profile.find({ owner: req.user.userId });
+    console.log('/');
+    const profiles = await Profile.find({ owner: req.User.userId });
     res.json(profiles);
   } catch (e) {
     res.status(500).json({ message: 'Something went wrong, try one more time'});
