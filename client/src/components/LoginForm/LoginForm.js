@@ -1,11 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
+import {withRouter} from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import {useHttp} from "../../hooks/http.hook";
 import {AuthContext} from "../../context/AuthContext";
 import 'react-toastify/dist/ReactToastify.css';
 import './loginForm.css';
 
-const LoginForm = ({ isSignIn }) => {
+const LoginForm = withRouter (({ isSignIn, history, ...props }) => {
   const defaultState = {
     username: '',
     email: '',
@@ -53,6 +54,7 @@ const LoginForm = ({ isSignIn }) => {
       if (target === 'Sign Up') {
         const data = await request('/api/auth/register', 'POST', {...state});
         showToast(data.message, 'success');
+        history.push('/');
       } else {
         const data = await request('/api/auth/login', 'POST', {
           email: state.email,
@@ -105,6 +107,6 @@ const LoginForm = ({ isSignIn }) => {
       </div>
     </div>
   )
-}
+});
 
 export default LoginForm;
