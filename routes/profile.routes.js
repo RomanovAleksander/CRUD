@@ -1,18 +1,24 @@
 const {Router} = require('express');
 const router = Router();
 const auth = require('../middleware/auth.middleware');
+const User = require('../models/User');
 const Profile = require('../models/Profile');
 
 router.post('/create', auth, async (req, res) => {
   try {
     const {name, gender, birthdate, city} = req.body;
-    console.log(req)
 
     const profile = new Profile({
       name, gender, birthdate, city, owner: req.User.userId
     })
 
     await profile.save();
+
+    await User.findByIdAndUpdate(req.User.userId, {
+      $push: {
+        profiles: profile._id
+      }
+    })
 
     res.status(201).json({ message: 'Профиль создан' });
   } catch (e) {

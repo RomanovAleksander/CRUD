@@ -1,6 +1,27 @@
+// import React, {useCallback, useEffect, useState} from 'react';
+// import {useHttp} from "../../hooks/http.hook";
+// import {Loader} from "../Loader/Loader";
 import styles from './Dashboard.module.scss';
 
 const Dashboard = () => {
+  // const {request, loading} = useHttp();
+  // const [usersDara, setUsersData] = useState([]);
+  //
+  // const fetchData = useCallback(async () => {
+  //   try {
+  //     const data = await request('/api/auth/', 'GET');
+  //     setUsersData(data);
+  //   } catch (e) {}
+  // }, [request])
+  //
+  // useEffect(() => {
+  //   fetchData();
+  // }, [fetchData])
+  //
+  // if (loading) {
+  //   return <Loader />
+  // }
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>

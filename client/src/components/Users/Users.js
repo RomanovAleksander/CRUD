@@ -1,21 +1,27 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styles from './Users.module.scss';
 import {useHttp} from "../../hooks/http.hook";
+import {Loader} from "../Loader/Loader";
 
 const Users = () => {
-  const {request} = useHttp();
+  const {request, loading} = useHttp();
   const [users, setUsers] = useState([]);
 
   const fetchUsers = useCallback(async () => {
     try {
         const data = await request('/api/auth/', 'GET');
         setUsers(data);
+      console.log(data)
     } catch (e) {}
   }, [request])
 
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers])
+
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <div className={styles.container}>

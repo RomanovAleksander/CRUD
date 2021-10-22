@@ -3,27 +3,32 @@ import {ModalContext} from "../../context/ModalContext";
 import styles from './Profiles.module.scss';
 import {useHttp} from "../../hooks/http.hook";
 import {AuthContext} from "../../context/AuthContext";
+import {Loader} from "../Loader/Loader";
 
 const Profiles = () => {
   const modal = useContext(ModalContext);
-  const auth = useContext(AuthContext);
-  const {request} = useHttp();
+  const {token} = useContext(AuthContext);
+  const {request, loading} = useHttp();
   const [profiles, setProfiles] = useState([]);
 
   const fetchProfiles = useCallback(async () => {
     try {
       const data = await request('/api/profile/', 'GET', null, {
-        Authorization: `Bearer ${auth.token}`
+        Authorization: `Bearer ${token}`
       });
       setProfiles(data);
     } catch (e) {
       console.log(e.message)
     }
-  }, [request])
+  }, [token, request])
 
   useEffect(() => {
     fetchProfiles();
   }, [fetchProfiles])
+
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <div className={styles.container}>
