@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import {useHttp} from "../../hooks/http.hook";
 import {AuthContext} from "../../context/AuthContext";
 import 'react-toastify/dist/ReactToastify.css';
-import './loginForm.css';
+import styles from './LoginForm.module.scss';
 
 const LoginForm = withRouter (({ isSignIn, history, ...props }) => {
   const defaultState = {
@@ -66,12 +66,12 @@ const LoginForm = withRouter (({ isSignIn, history, ...props }) => {
   }
 
   return (
-    <div className="form-wrapper">
+    <div className={styles.wrapper}>
       <ToastContainer />
-      <div className="form-title">
+      <div className={styles.title}>
         {isSignIn ? 'Sign in' : 'Create your account'}
       </div>
-      <div className="form">
+      <div className={styles.form}>
         {!isSignIn && (
           <label>
             Username
@@ -87,21 +87,21 @@ const LoginForm = withRouter (({ isSignIn, history, ...props }) => {
           <input type="password" name="password" onChange={handleChange}/>
         </label>
         {!isSignIn && (
-          <label className="isAdmin">
+          <label className={styles.isAdmin}>
             <input type="checkbox" name="isAdmin"
                    checked={state.isAdmin}
                    onChange={handleCheck}/>
             is admin
           </label>
         )}
-        <div className="form-submit-buttons">
-          <button className="form-submit-btn"
+        <div className={styles.buttonsWrapper}>
+          <button className={styles.submitButton}
                   onClick={submitHandler}
                   disabled={loading}
           >
             {isSignIn ? 'Sign In' : 'Sign Up'}
           </button>
-          <span className="form-diving-line" />
+          <span className={styles.divingLine} />
           <a href={`${!isSignIn ? '/' : '/signup'}`}>{!isSignIn ? 'Sign In' : 'Sign Up'}</a>
         </div>
       </div>

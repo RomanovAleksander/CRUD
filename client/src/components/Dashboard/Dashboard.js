@@ -1,21 +1,23 @@
-import './dashboard.css';
+import styles from './Dashboard.module.scss';
 
 const Dashboard = () => {
   return (
-    <div className="content-wrapper">
-      <div className="page-title">Dashboard:</div>
-      <div className="dashboard-info">
-        <div className="dashboard-info__block">
-          <p className="block-title">Users:</p>
-          <p className="block-count">13</p>
-        </div>
-        <div className="dashboard-info__block">
-          <p className="block-title">Profiles:</p>
-          <p className="block-count">27</p>
-        </div>
-        <div className="dashboard-info__block">
-          <p className="block-title">Profiles over 18 years old:</p>
-          <p className="block-count">20</p>
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
+        <div className={styles.pageTitle}>Dashboard:</div>
+        <div className={styles.dashboard}>
+          <div className={styles.dashboardItem}>
+            <p className={styles.title}>Users:</p>
+            <p className={styles.count}>13</p>
+          </div>
+          <div className={styles.dashboardItem}>
+            <p className={styles.title}>Profiles:</p>
+            <p className={styles.count}>27</p>
+          </div>
+          <div className={styles.dashboardItem}>
+            <p className={styles.title}>Profiles over 18 years old:</p>
+            <p className={styles.count}>20</p>
+          </div>
         </div>
       </div>
     </div>

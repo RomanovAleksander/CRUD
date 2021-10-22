@@ -1,19 +1,21 @@
-import './profiles.css';
+import styles from './Profiles.module.scss';
 
 const Profiles = () => {
   return (
-    <div className="content-wrapper">
-      <div className="page-title">Profiles:</div>
-      <div className="profiles-info">
-        <div className="profiles-info__block">
-          <p className="profile-title">Danylo Bilyi</p>
-          <p className="profile-male p-t">male</p>
-          <p className="profile-birth-date p-t">25.03.2003</p>
-          <p className="profile-city p-t">Kyiv</p>
-          <div className="card-buttons">
-            <button className="edit btn">edit</button>
-            <span className="diving-line" />
-            <button className="delete btn">delete</button>
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
+        <div className={styles.pageTitle}>Profiles:</div>
+        <div className={styles.contentWrapper}>
+          <div className={styles.profile}>
+            <p className={styles.title}>Danylo Bilyi</p>
+            <p>male</p>
+            <p>25.03.2003</p>
+            <p>Kyiv</p>
+            <div className={styles.buttonsWrapper}>
+              <button className={styles.button}>edit</button>
+              <span className={styles.divingLine} />
+              <button className={styles.button}>delete</button>
+            </div>
           </div>
         </div>
       </div>

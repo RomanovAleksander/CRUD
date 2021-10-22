@@ -33,40 +33,40 @@
   border: 1.5px solid #D6D8E7;
 }
 
-.buttons-wrapper {
+.wrapper {
   display: flex;
 }
 
-.nav-menu {
+.menu {
   display: flex;
 }
 
-.nav-menu .nav-button {
+.button {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 20px 0 20px;
   cursor: pointer;
+
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: rgba(20, 20, 43, 1);
+  }
+
+  img {
+    margin-left: 11px;
+  }
 }
 
-.nav-menu .nav-button a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  color: rgba(20, 20, 43, 1);
-}
-
-.nav-menu .nav-button img {
-  margin-left: 11px;
-}
-
-.log-out {
+.logout {
   margin-left: 80px;
   cursor: pointer;
-}
 
-.log-out a {
-  text-decoration: none;
-  color: rgba(20, 20, 43, 1);
+  a {
+    text-decoration: none;
+    color: rgba(20, 20, 43, 1);
+  }
 }

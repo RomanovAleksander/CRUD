@@ -1,0 +1,81 @@
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 1920px;
+  display: block;
+  margin: 0 auto;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0 120px 0 120px;
+}
+
+.pageTitle {
+  color: #14142B;
+  font-size: 36px;
+  margin-bottom: 60px;
+}
+
+.contentWrapper {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid #D6D8E7;
+  border-radius: 16px;
+  background: #FFFFFF;
+  padding-top: 35px;
+  margin-right: 32px;
+  margin-bottom: 60px;
+  width: 320px;
+  height: 298px;
+  position: relative;
+
+  .title {
+    font-weight: 500;
+    padding-top: 20px;
+  }
+
+  p {
+    margin: 0;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 36px;
+    letter-spacing: 0.75px;
+    color: #4E4B66;
+    padding-top: 15px;
+  }
+}
+
+.buttonsWrapper {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  bottom: 0;
+  border-top: 1px solid #D6D8E7;
+
+  .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+  }
+
+  .divingLine {
+    width: 0;
+    border-right: 1px solid #D6D8E7;
+  }
+}

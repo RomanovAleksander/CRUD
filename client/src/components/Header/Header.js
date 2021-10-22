@@ -1,13 +1,11 @@
 import React, {useContext} from 'react';
 import {NavLink, useHistory} from "react-router-dom";
+import {AuthContext} from "../../context/AuthContext";
 import adminAvatar from '../../assets/adminAvatar.png';
 import userAvatar from '../../assets/userAvatar.png';
 import profiles from '../../assets/profiles.png';
 import dashboard from '../../assets/dashboard.png';
 import users from '../../assets/users.png';
-import './header.css';
-import {AuthContext} from "../../context/AuthContext";
-
 import styles from './Header.module.scss';
 
 const Header = () => {
@@ -23,28 +21,28 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.avatarContainer}>
-        <span className={`avatar ${auth.isAdmin ? 'admin' : 'user'}`}
+        <span className={`${styles.avatar} ${auth.isAdmin ? styles.admin : styles.user}`}
               style={{
           backgroundImage: `url(${auth.isAdmin ? adminAvatar : userAvatar})`
         }} />
-        <span className="name">1White</span>
+        <span>1White</span>
       </div>
-      <div className="buttons-wrapper">
+      <div className={styles.wrapper}>
         { auth.isAdmin && (
-          <nav className="nav-menu">
-            <div className="nav-button">
+          <nav className={styles.menu}>
+            <div className={styles.button}>
               <NavLink to="/profiles">
                 Profiles
                 <img src={profiles} alt="profiles logo"/>
               </NavLink>
             </div>
-            <div className="nav-button">
+            <div className={styles.button}>
               <NavLink to="/dashboard">
                 Dashboard
                 <img src={dashboard} alt="dashboard logo"/>
               </NavLink>
             </div>
-            <div className="nav-button">
+            <div className={styles.button}>
               <NavLink to="/users">
                 Users
                 <img src={users} alt="users logo"/>
@@ -52,7 +50,7 @@ const Header = () => {
             </div>
           </nav>
         )}
-        <div className="log-out">
+        <div className={styles.logout}>
           <a href="/" onClick={logoutHandler}>Log Out</a>
         </div>
       </div>

@@ -2,7 +2,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import {useRoutes} from "../../routes";
 import {useAuth} from "../../hooks/auth.hook";
 import {AuthContext} from "../../context/AuthContext";
-import './App.css';
 import Header from "../Header/Header";
 
 function App() {
