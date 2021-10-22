@@ -20,7 +20,7 @@ router.post('/create', auth, async (req, res) => {
       }
     })
 
-    res.status(201).json({ message: 'Профиль создан' });
+    res.status(201).json({ message: 'Profile created' });
   } catch (e) {
     res.status(500).json({ message: 'Something went wrong, try one more time' });
   }
