@@ -43,7 +43,7 @@
 
   .title {
     font-weight: 500;
-    padding-top: 20px;
+    padding-top: 0;
   }
 
   p {
@@ -55,6 +55,36 @@
     color: #4E4B66;
     padding-top: 15px;
   }
+
+  .createBtn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 1px solid #4E4B66;
+    box-sizing: border-box;
+    margin-top: 49px;
+
+    .vertical {
+      position: absolute;
+      border-right: 2px solid #4E4B66;
+      height: 30px;
+    }
+
+    .horizontal {
+      position: absolute;
+      border-top: 2px solid #4E4B66;
+      width: 30px;
+    }
+  }
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .buttonsWrapper {

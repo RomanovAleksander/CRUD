@@ -1,6 +1,10 @@
+import React, {useContext} from "react";
+import {ModalContext} from "../../context/ModalContext";
 import styles from './Profiles.module.scss';
 
 const Profiles = () => {
+  const modal = useContext(ModalContext);
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -16,6 +20,15 @@ const Profiles = () => {
               <span className={styles.divingLine} />
               <button className={styles.button}>delete</button>
             </div>
+          </div>
+          <div className={`${styles.profile} ${styles.pointer}`}
+               onClick={() => modal() }
+          >
+            <div className={styles.createBtn}>
+              <div className={styles.vertical} />
+              <div className={styles.horizontal} />
+            </div>
+            <p>Create new profile</p>
           </div>
         </div>
       </div>
