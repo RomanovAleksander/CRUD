@@ -1,21 +1,22 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {withRouter} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import {useHttp} from "../../hooks/http.hook";
 import {AuthContext} from "../../context/AuthContext";
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './LoginForm.module.scss';
 
-const LoginForm = withRouter (({ isSignIn, history, ...props }) => {
-  const defaultState = {
+const LoginForm =  ({ isSignIn }) => {
+  const defaultData = {
     username: '',
     email: '',
     password: '',
     isAdmin: false
   };
+  const history = useHistory();
   const auth = useContext(AuthContext);
   const {loading, request, error, clearError} = useHttp();
-  const [state, setState] = useState(defaultState);
+  const [userData, setUserData] = useState(defaultData);
 
   useEffect(() => {
     showToast(error, 'error');
@@ -36,7 +37,7 @@ const LoginForm = withRouter (({ isSignIn, history, ...props }) => {
   }
 
   const handleChange = (event) => {
-    setState(prevState => {
+    setUserData(prevState => {
       return {
         ...prevState,
         [event.target.name]: event.target.value
@@ -45,22 +46,23 @@ const LoginForm = withRouter (({ isSignIn, history, ...props }) => {
   }
 
   const handleCheck = (event) => {
-    setState({ ...state, isAdmin: event.target.checked });
+    setUserData({ ...userData, isAdmin: event.target.checked });
   }
 
   const submitHandler = async (e) => {
     const target = e.target.textContent;
     try {
       if (target === 'Sign Up') {
-        const data = await request('/api/auth/register', 'POST', {...state});
+        const data = await request('/api/auth/register', 'POST', {...userData});
         showToast(data.message, 'success');
         history.push('/');
+        setUserData({...defaultData});
       } else {
         const data = await request('/api/auth/login', 'POST', {
-          email: state.email,
-          password: state.password
+          email: userData.email,
+          password: userData.password
         });
-        auth.login(data.token, data.userId, data.isAdmin)
+        auth.login(data.token, data.userId, data.isAdmin);
       }
     } catch (e) {}
   }
@@ -75,21 +77,33 @@ const LoginForm = withRouter (({ isSignIn, history, ...props }) => {
         {!isSignIn && (
           <label>
             Username
-            <input type="username" name="username" onChange={handleChange}/>
+            <input type="username"
+                   name="username"
+                   onChange={handleChange}
+                   value={userData.username}
+            />
           </label>
         )}
         <label>
           Email
-          <input type="text" name="email" onChange={handleChange}/>
+          <input type="text"
+                 name="email"
+                 onChange={handleChange}
+                 value={userData.email}
+          />
         </label>
         <label>
           Password
-          <input type="password" name="password" onChange={handleChange}/>
+          <input type="password"
+                 name="password"
+                 onChange={handleChange}
+                 value={userData.password}
+          />
         </label>
         {!isSignIn && (
           <label className={styles.isAdmin}>
             <input type="checkbox" name="isAdmin"
-                   checked={state.isAdmin}
+                   checked={userData.isAdmin}
                    onChange={handleCheck}/>
             is admin
           </label>
@@ -107,6 +121,6 @@ const LoginForm = withRouter (({ isSignIn, history, ...props }) => {
       </div>
     </div>
   )
-});
+};
 
 export default LoginForm;

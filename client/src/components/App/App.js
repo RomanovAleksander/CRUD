@@ -5,6 +5,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {ModalContext} from "../../context/ModalContext";
 import Header from "../Header/Header";
 import {useState} from "react";
+import ModalForm from "../ModalForm/ModalForm";
 
 function App() {
   const { token, login, logout, userId, isAdmin } = useAuth();
@@ -27,7 +28,7 @@ function App() {
     }}>
       <ModalContext.Provider value={toggle}>
         <Router>
-          { modalData.isOpen && <div>Open MODAL</div>}
+          { modalData.isOpen && <ModalForm />}
           { isAuthenticated && <Header />}
           {routes}
         </Router>

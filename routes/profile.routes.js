@@ -6,16 +6,17 @@ const Profile = require('../models/Profile');
 router.post('/create', auth, async (req, res) => {
   try {
     const {name, gender, birthdate, city} = req.body;
+    console.log(req)
 
     const profile = new Profile({
-      name, gender, birthdate, city, owner: req.user.userId
+      name, gender, birthdate, city, owner: req.User.userId
     })
 
     await profile.save();
 
     res.status(201).json({ message: 'Профиль создан' });
   } catch (e) {
-    res.status(500).json({ message: 'Something went wrong, try one more time'});
+    res.status(500).json({ message: 'Something went wrong, try one more time' });
   }
 })
 
