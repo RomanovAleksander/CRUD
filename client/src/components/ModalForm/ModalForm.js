@@ -80,7 +80,8 @@ const ModalForm = () => {
           <label>
             birthdate:
             <input name="birthdate"
-                   type="text"
+                   data-date-format="DD MMMM YYYY"
+                   type="date"
                    value={profileData.birthdate}
                    onChange={handleChange}
             />
