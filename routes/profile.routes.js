@@ -3,6 +3,7 @@ const router = Router();
 const auth = require('../middleware/auth.middleware');
 const User = require('../models/User');
 const Profile = require('../models/Profile');
+const getAdultsCount = require('../utils/profiles');
 
 router.post('/create', auth, async (req, res) => {
   try {
@@ -30,7 +31,7 @@ router.get('/all', auth, async (req, res) => {
   try {
     console.log('/');
     const profiles = await Profile.find();
-    res.json(profiles);
+    res.json({profiles, adults: getAdultsCount(profiles)});
   } catch (e) {
     res.status(500).json({ message: 'Something went wrong, try one more time'});
   }

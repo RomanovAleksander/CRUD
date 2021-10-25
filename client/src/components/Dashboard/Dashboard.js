@@ -7,8 +7,8 @@ import {AuthContext} from "../../context/AuthContext";
 const Dashboard = () => {
   const { token } = useContext(AuthContext);
   const {request, loading} = useHttp();
-  const [users, setUsers] = useState([]);
-  const [profiles, setProfiles] = useState([]);
+  const [users, setUsers] = useState(null);
+  const [profiles, setProfiles] = useState(null);
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -16,28 +16,6 @@ const Dashboard = () => {
       setUsers(data);
     } catch (e) {}
   }, [request])
-
-  const getAge = (dateString) => {
-    let today = new Date();
-    let birthDate = new Date(dateString);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    let m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))
-    {
-      age--;
-    }
-    return age;
-  }
-
-  const getCount = (profiles) => {
-    const res = [];
-
-    profiles.forEach((profile) => {
-      res.push(getAge(profile.birthdate));
-    });
-
-   return res.filter((item) => item >= 18).length;
-  }
 
   const fetchProfiles = useCallback(async () => {
     try {
@@ -57,27 +35,31 @@ const Dashboard = () => {
     return <Loader />
   }
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.wrapper}>
-        <div className={styles.pageTitle}>Dashboard:</div>
-        <div className={styles.dashboard}>
-          <div className={styles.dashboardItem}>
-            <p className={styles.title}>Users:</p>
-            <p className={styles.count}>{users.length}</p>
-          </div>
-          <div className={styles.dashboardItem}>
-            <p className={styles.title}>Profiles:</p>
-            <p className={styles.count}>{profiles.length}</p>
-          </div>
-          <div className={styles.dashboardItem}>
-            <p className={styles.title}>Profiles over 18 years old:</p>
-            <p className={styles.count}>{getCount(profiles) || '0'}</p>
+  if (users && profiles) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.wrapper}>
+          <div className={styles.pageTitle}>Dashboard:</div>
+          <div className={styles.dashboard}>
+            <div className={styles.dashboardItem}>
+              <p className={styles.title}>Users:</p>
+              <p className={styles.count}>{users.length}</p>
+            </div>
+            <div className={styles.dashboardItem}>
+              <p className={styles.title}>Profiles:</p>
+              <p className={styles.count}>{profiles.profiles.length}</p>
+            </div>
+            <div className={styles.dashboardItem}>
+              <p className={styles.title}>Profiles over 18 years old:</p>
+              <p className={styles.count}>{profiles.adults}</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  } else {
+    return <Loader />
+  }
 }
 
 export default Dashboard;
