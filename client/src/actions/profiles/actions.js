@@ -2,7 +2,9 @@ import {
   SET_PROFILES,
   CREATE_PROFILE,
   UPDATE_PROFILE,
-  DELETE_PROFILE
+  CHANGE_PROFILE,
+  DELETE_PROFILE,
+  CLEAR_FORM
 } from './types';
 
 const setProfiles = (items) => ({
@@ -19,13 +21,6 @@ const createProfile = (item) => ({
   }
 });
 
-const updateProfile = (...items) => ({
-  type: UPDATE_PROFILE,
-  payload: {
-    items
-  }
-});
-
 const deleteProfile = (id) => ({
   type: DELETE_PROFILE,
   payload: {
@@ -33,9 +28,29 @@ const deleteProfile = (id) => ({
   }
 });
 
+const changeProfile = (id) => ({
+  type: CHANGE_PROFILE,
+  payload: {
+    id
+  }
+});
+
+const updateProfile = (items) => ({
+  type: UPDATE_PROFILE,
+  payload: {
+    ...items
+  }
+});
+
+const clearForm = () => ({
+  type: CLEAR_FORM
+})
+
 export {
   setProfiles,
   createProfile,
+  changeProfile,
   updateProfile,
-  deleteProfile
+  deleteProfile,
+  clearForm
 };

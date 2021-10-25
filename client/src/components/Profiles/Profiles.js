@@ -2,13 +2,13 @@ import React, {useCallback, useContext, useEffect} from "react";
 import { connect } from 'react-redux';
 import {AuthContext} from "../../context/AuthContext";
 import {ModalContext} from "../../context/ModalContext";
-import {setProfiles, deleteProfile} from '../../actions/profiles/actions';
+import {setProfiles, deleteProfile, changeProfile} from '../../actions/profiles/actions';
 import {useHttp} from "../../hooks/http.hook";
 import {Loader} from "../Loader/Loader";
 import styles from './Profiles.module.scss';
 import {toast, ToastContainer} from "react-toastify";
 
-const Profiles = ({ profiles, setProfiles, deleteProfile }) => {
+const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile }) => {
   const modal = useContext(ModalContext);
   const {token} = useContext(AuthContext);
   const {request, loading} = useHttp();
@@ -57,6 +57,11 @@ const Profiles = ({ profiles, setProfiles, deleteProfile }) => {
     fetchDeleteProfile(id)
   }
 
+  const handleEdit = (id) => {
+    changeProfile(id);
+    modal();
+  }
+
   if (loading) {
     return <Loader />
   }
@@ -75,7 +80,7 @@ const Profiles = ({ profiles, setProfiles, deleteProfile }) => {
                 <p>{profile.birthdate}</p>
                 <p>{profile.city}</p>
                 <div className={styles.buttonsWrapper}>
-                  <button className={styles.button}>edit</button>
+                  <button className={styles.button} onClick={() => handleEdit(profile._id)}>edit</button>
                   <span className={styles.divingLine} />
                   <button className={styles.button} onClick={() => handleDelete(profile._id)}>delete</button>
                 </div>
@@ -99,7 +104,8 @@ const Profiles = ({ profiles, setProfiles, deleteProfile }) => {
 
 const mapDispatchToProps = {
   setProfiles,
-  deleteProfile
+  deleteProfile,
+  changeProfile
 };
 
 const mapStateToProps = state => ({

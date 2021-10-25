@@ -27,6 +27,15 @@ router.post('/create', auth, async (req, res) => {
   }
 })
 
+router.post('/update', auth, async (req, res) => {
+  try {
+    const profile = await Profile.findByIdAndUpdate(req.body._id, {...req.body});
+    res.status(201).json({ message: 'Profile updated', profile: req.body });
+  } catch (e) {
+    res.status(500).json({ message: 'Something went wrong, try one more time' });
+  }
+})
+
 router.delete('/delete', auth, async (req, res) => {
   try {
     await Profile.findByIdAndDelete(req.body.id)

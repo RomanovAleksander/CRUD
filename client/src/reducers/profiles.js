@@ -1,13 +1,15 @@
 import {
   SET_PROFILES,
   CREATE_PROFILE,
-  // UPDATE_PROFILE,
-  DELETE_PROFILE
+  CHANGE_PROFILE,
+  UPDATE_PROFILE,
+  DELETE_PROFILE,
+  CLEAR_FORM
 } from '../actions/profiles/types';
 
 const initialState = {
     profiles: [],
-    profile: {}
+    profile: null
 };
 
 export const profiles = (state = initialState, action) => {
@@ -31,6 +33,34 @@ export const profiles = (state = initialState, action) => {
       return {
         ...state,
         profiles: newArray
+      }
+
+    case CHANGE_PROFILE:
+      const profile = state.profiles.find(profile => profile._id === payload.id);
+
+      return {
+        ...state,
+        profile: profile
+      }
+
+    case UPDATE_PROFILE:
+      const updatedProfiles = state.profiles.map(profile => {
+        return profile._id === payload._id ? {
+          ...payload
+        } : profile
+      });
+      console.log(updatedProfiles)
+
+      return {
+        ...state,
+        profiles: updatedProfiles,
+        profile: null
+      }
+
+    case CLEAR_FORM:
+      return {
+        ...state,
+        profile: null
       }
 
     default:
