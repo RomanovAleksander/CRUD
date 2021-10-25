@@ -1,15 +1,16 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import {ModalContext} from "../../context/ModalContext";
-import styles from './Profiles.module.scss';
-import {useHttp} from "../../hooks/http.hook";
+import { connect } from 'react-redux';
 import {AuthContext} from "../../context/AuthContext";
+import {ModalContext} from "../../context/ModalContext";
+import {setProfiles} from '../../actions/profiles/actions';
+import {useHttp} from "../../hooks/http.hook";
 import {Loader} from "../Loader/Loader";
+import styles from './Profiles.module.scss';
 
-const Profiles = () => {
+const Profiles = ({ profiles, setProfiles }) => {
   const modal = useContext(ModalContext);
   const {token} = useContext(AuthContext);
   const {request, loading} = useHttp();
-  const [profiles, setProfiles] = useState([]);
 
   const fetchProfiles = useCallback(async () => {
     try {
@@ -65,4 +66,15 @@ const Profiles = () => {
   )
 }
 
-export default Profiles;
+const mapDispatchToProps = {
+  setProfiles
+};
+
+const mapStateToProps = state => ({
+  profiles: state.profiles.profiles
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profiles);

@@ -5,8 +5,11 @@ import {useHttp} from "../../hooks/http.hook";
 import {AuthContext} from "../../context/AuthContext";
 import {ToastContainer, toast} from "react-toastify";
 
+import { connect } from 'react-redux';
+import {createProfile} from '../../actions/profiles/actions';
 
-const ModalForm = () => {
+
+const ModalForm = ({ createProfile }) => {
   const defaultData = {
     name: '',
     gender: '',
@@ -45,7 +48,9 @@ const ModalForm = () => {
       const data = await request('/api/profile/create', 'POST', {...profileData}, {
         Authorization: `Bearer ${auth.token}`
       });
+      createProfile(data.profile);
       showToast(data.message, 'success');
+      modal();
     } catch (e) {}
   }
 
@@ -104,4 +109,11 @@ const ModalForm = () => {
   )
 }
 
-export default ModalForm;
+const mapDispatchToProps = {
+  createProfile
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ModalForm);
