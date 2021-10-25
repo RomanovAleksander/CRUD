@@ -30,7 +30,6 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile }) => {
 
   const fetchProfiles = useCallback(async () => {
     try {
-      console.log(userId)
       const data = await request('/api/profile/', 'GET', null,{
         Authorization: `Bearer ${token}`,
         params: userId
@@ -39,7 +38,7 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile }) => {
     } catch (e) {
       console.log(e.message)
     }
-  }, [token, request, setProfiles])
+  }, [token, request, setProfiles, userId])
 
   const fetchDeleteProfile = useCallback(async (id) => {
     try {
