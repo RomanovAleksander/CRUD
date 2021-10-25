@@ -94,7 +94,8 @@ class authController {
     }
 
     const decoded = jwt.verify(token, config.get('jwtSecret'));
-    const user = await User.findOne({value: decoded.userId});
+    const user = await User.findOne({_id: decoded.userId});
+    console.log(user)
 
     if (!user) {
       return res.status(401).json({ message: 'No authorization' })

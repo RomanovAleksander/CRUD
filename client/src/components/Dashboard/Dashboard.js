@@ -12,10 +12,12 @@ const Dashboard = () => {
 
   const fetchUsers = useCallback(async () => {
     try {
-      const data = await request('/api/auth/', 'GET');
+      const data = await request('/api/auth/', 'GET', null, {
+        Authorization: `Bearer ${token}`
+      });
       setUsers(data);
     } catch (e) {}
-  }, [request])
+  }, [request, token])
 
   const fetchProfiles = useCallback(async () => {
     try {
