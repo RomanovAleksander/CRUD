@@ -38,7 +38,12 @@ router.post('/update', auth, async (req, res) => {
 
 router.delete('/delete', auth, async (req, res) => {
   try {
-    await Profile.findByIdAndDelete(req.body.id)
+    await Profile.findByIdAndDelete(req.body.id);
+    await User.findByIdAndUpdate(req.User.userId, {
+      $pull: {
+        profiles: req.body.id
+      }
+    })
     res.status(201).json({ message: 'Profile deleted' });
   } catch (e) {
     res.status(500).json({ message: 'Something went wrong, try one more time' });
