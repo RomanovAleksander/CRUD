@@ -1,16 +1,30 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect} from "react";
 import { connect } from 'react-redux';
 import {AuthContext} from "../../context/AuthContext";
 import {ModalContext} from "../../context/ModalContext";
-import {setProfiles} from '../../actions/profiles/actions';
+import {setProfiles, deleteProfile} from '../../actions/profiles/actions';
 import {useHttp} from "../../hooks/http.hook";
 import {Loader} from "../Loader/Loader";
 import styles from './Profiles.module.scss';
+import {toast, ToastContainer} from "react-toastify";
 
-const Profiles = ({ profiles, setProfiles }) => {
+const Profiles = ({ profiles, setProfiles, deleteProfile }) => {
   const modal = useContext(ModalContext);
   const {token} = useContext(AuthContext);
   const {request, loading} = useHttp();
+
+  const showToast = (message, type) => {
+    toast[`${type}`](message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark"
+    });
+  }
 
   const fetchProfiles = useCallback(async () => {
     try {
@@ -21,11 +35,27 @@ const Profiles = ({ profiles, setProfiles }) => {
     } catch (e) {
       console.log(e.message)
     }
-  }, [token, request])
+  }, [token, request, setProfiles])
+
+  const fetchDeleteProfile = useCallback(async (id) => {
+    try {
+      const data = await request('/api/profile/delete', 'DELETE', {id}, {
+        Authorization: `Bearer ${token}`
+      });
+      deleteProfile(id);
+      showToast(data.message, 'success');
+    } catch (e) {
+      console.log(e.message)
+    }
+  }, [token, request, deleteProfile])
 
   useEffect(() => {
     fetchProfiles();
   }, [fetchProfiles])
+
+  const handleDelete = (id) => {
+    fetchDeleteProfile(id)
+  }
 
   if (loading) {
     return <Loader />
@@ -33,6 +63,7 @@ const Profiles = ({ profiles, setProfiles }) => {
 
   return (
     <div className={styles.container}>
+      <ToastContainer />
       <div className={styles.wrapper}>
         <div className={styles.pageTitle}>Profiles:</div>
         <div className={styles.contentWrapper}>
@@ -46,7 +77,7 @@ const Profiles = ({ profiles, setProfiles }) => {
                 <div className={styles.buttonsWrapper}>
                   <button className={styles.button}>edit</button>
                   <span className={styles.divingLine} />
-                  <button className={styles.button}>delete</button>
+                  <button className={styles.button} onClick={() => handleDelete(profile._id)}>delete</button>
                 </div>
               </div>
             )
@@ -67,7 +98,8 @@ const Profiles = ({ profiles, setProfiles }) => {
 }
 
 const mapDispatchToProps = {
-  setProfiles
+  setProfiles,
+  deleteProfile
 };
 
 const mapStateToProps = state => ({
