@@ -62,7 +62,7 @@ const LoginForm =  ({ isSignIn }) => {
           email: userData.email,
           password: userData.password
         });
-        auth.login(data.token, data.userId, data.isAdmin);
+        auth.login(data.token);
       }
     } catch (e) {}
   }

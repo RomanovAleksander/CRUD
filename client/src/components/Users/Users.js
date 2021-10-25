@@ -1,19 +1,23 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import styles from './Users.module.scss';
 import {useHttp} from "../../hooks/http.hook";
 import {Loader} from "../Loader/Loader";
+import {AuthContext} from "../../context/AuthContext";
 
 const Users = () => {
   const {request, loading} = useHttp();
   const [users, setUsers] = useState([]);
+  const {token} = useContext(AuthContext);
 
   const fetchUsers = useCallback(async () => {
     try {
-        const data = await request('/api/auth/', 'GET');
+        const data = await request('/api/auth/', 'GET', null, {
+          Authorization: `Bearer ${token}`
+        });
         setUsers(data);
       console.log(data)
     } catch (e) {}
-  }, [request])
+  }, [request, token])
 
   useEffect(() => {
     fetchUsers();

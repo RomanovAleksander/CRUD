@@ -9,7 +9,7 @@ import ModalForm from "../ModalForm/ModalForm";
 import {Loader} from "../Loader/Loader";
 
 function App() {
-  const { token, login, logout, userId, isAdmin, ready } = useAuth();
+  const { token, login, logout, userId, isAdmin, loading, ready } = useAuth();
   const isAuthenticated = !!token;
   const routes = useRoutes(isAuthenticated, isAdmin, true);
 
@@ -23,7 +23,7 @@ function App() {
     });
   }
 
-  if (!ready) {
+  if (!ready || loading) {
     return <Loader />
   }
 

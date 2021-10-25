@@ -1,4 +1,5 @@
 import {useState, useCallback, useEffect} from 'react';
+import {useHttp} from './http.hook';
 
 const storageName = 'userData';
 
@@ -7,16 +8,7 @@ export const useAuth = () => {
   const [ready, setReady] = useState(false);
   const [userId, setUserId] = useState(null);
   const [isAdmin, setIsAdmin] = useState(null);
-
-  const login = useCallback((jwtToken, id, isAdm) => {
-    setToken(jwtToken);
-    setUserId(id);
-    setIsAdmin(isAdm);
-
-    localStorage.setItem(storageName, JSON.stringify({
-      userId: id, token: jwtToken, isAdmin: isAdm
-    }));
-  }, []);
+  const {request, loading} = useHttp();
 
   const logout = useCallback(() => {
     setToken(null);
@@ -25,14 +17,33 @@ export const useAuth = () => {
     localStorage.removeItem(storageName);
   }, []);
 
+  const login = useCallback(async (jwtToken) => {
+    try {
+      const data = await request('/api/auth/token', 'GET', null, {
+        Authorization: `Bearer ${jwtToken}`
+      });
+
+      setToken(jwtToken);
+      setUserId(data.userId);
+      setIsAdmin(data.isAdmin);
+
+      localStorage.setItem(storageName, JSON.stringify({
+        token: jwtToken
+      }));
+    } catch (e) {
+      console.log(e.message);
+      logout();
+    }
+  }, [request, logout]);
+
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem(storageName));
 
     if (data && data.token) {
-      login(data.token, data.userId, data.isAdmin);
+      login(data.token);
     }
     setReady(true);
   }, [login])
 
-  return { login, logout, token, userId, isAdmin, ready };
+  return { login, logout, token, userId, isAdmin, loading, ready };
 }
