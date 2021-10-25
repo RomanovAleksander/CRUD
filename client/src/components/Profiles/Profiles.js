@@ -7,11 +7,13 @@ import {useHttp} from "../../hooks/http.hook";
 import {Loader} from "../Loader/Loader";
 import styles from './Profiles.module.scss';
 import {toast, ToastContainer} from "react-toastify";
+import {useParams} from "react-router-dom";
 
 const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile }) => {
   const modal = useContext(ModalContext);
   const {token} = useContext(AuthContext);
   const {request, loading} = useHttp();
+  const userId = useParams().id;
 
   const showToast = (message, type) => {
     toast[`${type}`](message, {
@@ -28,8 +30,10 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile }) => {
 
   const fetchProfiles = useCallback(async () => {
     try {
-      const data = await request('/api/profile/', 'GET', null, {
-        Authorization: `Bearer ${token}`
+      console.log(userId)
+      const data = await request('/api/profile/', 'GET', null,{
+        Authorization: `Bearer ${token}`,
+        params: userId
       });
       setProfiles(data);
     } catch (e) {

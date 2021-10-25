@@ -2,6 +2,7 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 import styles from './Users.module.scss';
 import {useHttp} from "../../hooks/http.hook";
 import {Loader} from "../Loader/Loader";
+import {UsersList} from "../UsersList/UsersList";
 import {AuthContext} from "../../context/AuthContext";
 
 const Users = () => {
@@ -32,15 +33,7 @@ const Users = () => {
       <div className={styles.wrapper}>
         <div className={styles.pageTitle}>Users:</div>
         <div className={styles.contentWrapper}>
-          {users.map((user) => {
-            return (
-              <div className={styles.user} key={user._id}>
-                <p className={styles.title}>{user.username}</p>
-                <p className={styles.email}>{user.email}</p>
-                <p className={styles.profiles}>{user.profiles.length}</p>
-              </div>
-            )
-          })}
+          <UsersList users={users} />
         </div>
       </div>
     </div>

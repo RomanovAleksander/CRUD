@@ -61,9 +61,16 @@ router.get('/all', auth, async (req, res) => {
 
 router.get('/', auth, async (req, res) => {
   try {
-    console.log('/');
-    const profiles = await Profile.find({ owner: req.User.userId });
-    res.json(profiles);
+    console.log(req.headers);
+    const ownerValue = (value) => Profile.find({ owner: value });
+
+    if (req.headers.params === 'undefined') {
+      const profiles = await ownerValue(req.User.userId);
+      res.json(profiles);
+    } else {
+      const profiles = await ownerValue(req.headers.params);
+      res.json(profiles);
+    }
   } catch (e) {
     res.status(500).json({ message: 'Something went wrong, try one more time'});
   }
