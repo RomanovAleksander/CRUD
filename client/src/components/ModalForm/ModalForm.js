@@ -7,7 +7,7 @@ import {ToastContainer, toast} from "react-toastify";
 import { connect } from 'react-redux';
 import {createProfile, updateProfile, clearProfileData} from '../../actions/profiles/actions';
 import {toggleForm} from '../../actions/modal/actions';
-import {setUser, updateUser} from '../../actions/users/actions';
+import {clearUserData, setUser, updateUser, loadState} from '../../actions/users/actions';
 import {useParams} from "react-router-dom";
 
 
@@ -15,7 +15,8 @@ const ModalForm = ({ createProfile, updateProfile,
                      clearProfileData, toggleForm,
                      profile, user,
                      isUser = false,
-                     updateUser, setUser }) => {
+                     updateUser, setUser, clearUserData,
+                     loadState}) => {
   const auth = useContext(AuthContext);
   const {request} = useHttp();
   const [formData, setFormData] = useState();
@@ -64,6 +65,7 @@ const ModalForm = ({ createProfile, updateProfile,
   const handleClose = () => {
     toggleForm();
     clearProfileData();
+    clearUserData();
   }
 
   const changeToken = async (user) => {
@@ -100,8 +102,10 @@ const ModalForm = ({ createProfile, updateProfile,
           Authorization: `Bearer ${auth.token}`
         });
         if (data.user._id === userId && data.user.isAdmin !== user.isAdmin) {
-          updateUser(null);
+          loadState();
           await changeToken(data.user);
+          toggleForm();
+          return;
         }
         showToast(data.message, 'success');
         updateUser(data.user);
@@ -215,7 +219,9 @@ const mapDispatchToProps = {
   clearProfileData,
   toggleForm,
   setUser,
-  updateUser
+  updateUser,
+  clearUserData,
+  loadState
 };
 
 const mapStateToProps = state => ({

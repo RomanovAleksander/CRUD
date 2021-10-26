@@ -30,7 +30,7 @@ export const useRoutes = (isAuthenticated, isAdmin, isSignIn) => {
           <DashboardPage />
         </Route>
         <Route path="/user/:id">
-          <UserDetailPage />
+          <UserDetailPage isAdmin={isAdmin}/>
         </Route>
         <Redirect to="/profiles" />
       </Switch>

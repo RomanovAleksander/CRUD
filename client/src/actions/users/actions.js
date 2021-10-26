@@ -2,7 +2,8 @@ import {
   SET_USER,
   CHANGE_USER,
   UPDATE_USER,
-  CLEAR_USER_DATA
+  CLEAR_USER_DATA,
+  LOAD_STATE
 } from './types';
 
 const setUser = (item) => ({
@@ -30,9 +31,14 @@ const clearUserData = () => ({
   type: CLEAR_USER_DATA
 })
 
+const loadState = () => ({
+  type: LOAD_STATE
+})
+
 export {
   setUser,
   changeUser,
   updateUser,
-  clearUserData
+  clearUserData,
+  loadState
 };

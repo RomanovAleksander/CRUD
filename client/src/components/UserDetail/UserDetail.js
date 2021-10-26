@@ -9,7 +9,7 @@ import {setUser, changeUser} from '../../actions/users/actions';
 import {connect} from "react-redux";
 import {toggleForm} from "../../actions/modal/actions";
 
-const UserDetail = ({ user, setUser, changeUser, toggleForm }) => {
+const UserDetail = ({ user, setUser, changeUser, toggleForm, loadingState }) => {
   const {request, loading} = useHttp();
   const {token} = useContext(AuthContext);
   const userId = useParams().id;
@@ -50,11 +50,11 @@ const UserDetail = ({ user, setUser, changeUser, toggleForm }) => {
   }, [request, token, userId, auth])
 
   useEffect(() => {
-    fetchUser();
-  }, [fetchUser])
+    if (!loadingState) fetchUser();
+  }, [fetchUser, loadingState])
 
   const handleDelete = () => {
-    fetchUserDelete()
+    fetchUserDelete();
   }
 
   const handleEdit = () => {
@@ -66,7 +66,7 @@ const UserDetail = ({ user, setUser, changeUser, toggleForm }) => {
   return (
     <div className={styles.container}>
       <ToastContainer />
-      {!loading && (
+      {!loading && user && (
         <div className={styles.wrapper}>
           <div>{user.username}</div>
           <div>{user.email}</div>
@@ -88,7 +88,8 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = state => ({
-  user: state.user.user
+  user: state.user.user,
+  loadingState: state.user.loadingState
 });
 
 export default connect(

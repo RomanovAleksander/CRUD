@@ -8,8 +8,9 @@ import {Loader} from "../Loader/Loader";
 import styles from './Profiles.module.scss';
 import {toast, ToastContainer} from "react-toastify";
 import {useParams} from "react-router-dom";
+import {loadState} from "../../actions/users/actions";
 
-const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleForm }) => {
+const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleForm, loadState, loadingState }) => {
   const {token} = useContext(AuthContext);
   const {request, loading} = useHttp();
   const userId = useParams().id;
@@ -58,8 +59,9 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleF
   }, [token, request, deleteProfile])
 
   useEffect(() => {
-    fetchProfiles();
-  }, [fetchProfiles])
+    if (!loadingState) fetchProfiles();
+    if (loadingState && !userId) loadState();
+  }, [fetchProfiles, loadingState, loadState, userId])
 
   const handleDelete = (id) => {
     fetchProfileDelete(id)
@@ -114,11 +116,13 @@ const mapDispatchToProps = {
   setProfiles,
   deleteProfile,
   changeProfile,
-  toggleForm
+  toggleForm,
+  loadState
 };
 
 const mapStateToProps = state => ({
-  profiles: state.profiles.profiles
+  profiles: state.profiles.profiles,
+  loadingState: state.user.loadingState
 });
 
 export default connect(

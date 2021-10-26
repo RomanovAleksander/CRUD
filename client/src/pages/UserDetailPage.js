@@ -7,7 +7,7 @@ const UserDetailPage = ({ isOpen, isUser }) => {
   return (
     <>
       { isOpen && <ModalForm isUser={isUser} /> }
-      <UserDetail />
+      <UserDetail/>
       <Profiles />
     </>
   )
