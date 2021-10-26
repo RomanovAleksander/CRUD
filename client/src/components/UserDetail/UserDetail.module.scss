@@ -16,16 +16,37 @@
   padding: 0 120px 0 120px;
 }
 
+.userTitle {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 48px;
+  letter-spacing: 1px;
+  color: #14142B;
+  margin-bottom: 20px;
+}
+
+.role {
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
 .buttonsWrapper {
   display: flex;
+  justify-content: space-between;
+  width: 83px;
 
   .button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    background-color: transparent;
+    display: block;
+    width: 24px;
+    height: 24px;
     border: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
     cursor: pointer;
   }
 }

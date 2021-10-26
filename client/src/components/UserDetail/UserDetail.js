@@ -9,6 +9,11 @@ import {setUser, changeUser} from '../../actions/users/actions';
 import {connect} from "react-redux";
 import {toggleForm} from "../../actions/modal/actions";
 
+import edit from '../../assets/edit.png';
+import deleteIcon from '../../assets/deleteIcon.png';
+import adminAvatar from "../../assets/adminAvatar.png";
+import userAvatar from "../../assets/userAvatar.png";
+
 const UserDetail = ({ user, setUser, changeUser, toggleForm, loadingState }) => {
   const {request, loading} = useHttp();
   const {token} = useContext(AuthContext);
@@ -68,12 +73,22 @@ const UserDetail = ({ user, setUser, changeUser, toggleForm, loadingState }) => 
       <ToastContainer />
       {!loading && user && (
         <div className={styles.wrapper}>
-          <div>{user.username}</div>
-          <div>{user.email}</div>
-          <div>{user.isAdmin ? 'admin' : 'user'}</div>
+          <div className={styles.userTitle}>{user.username}</div>
+          <div className={styles.userTitle}>{user.email}</div>
+          <div className={styles.role}>{user.isAdmin ? 'admin' : 'user'}</div>
           <div className={styles.buttonsWrapper}>
-            <button className={styles.button} onClick={handleEdit}>edit</button>
-            <button className={styles.button} onClick={handleDelete}>delete</button>
+            <button className={styles.button}
+                    onClick={handleEdit}
+                    style={{
+                      backgroundImage: `url(${edit})`
+                    }}
+            />
+            <button className={styles.button}
+                    onClick={handleDelete}
+                    style={{
+                      backgroundImage: `url(${deleteIcon})`
+                    }}
+            />
           </div>
         </div>
       )}
