@@ -11,8 +11,6 @@ import {toggleForm} from "../../actions/modal/actions";
 
 import edit from '../../assets/edit.png';
 import deleteIcon from '../../assets/deleteIcon.png';
-import adminAvatar from "../../assets/adminAvatar.png";
-import userAvatar from "../../assets/userAvatar.png";
 
 const UserDetail = ({ user, setUser, changeUser, toggleForm, loadingState }) => {
   const {request, loading} = useHttp();

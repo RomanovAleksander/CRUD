@@ -10,6 +10,9 @@ import {toggleForm} from '../../actions/modal/actions';
 import {clearUserData, setUser, updateUser, loadState} from '../../actions/users/actions';
 import {useParams} from "react-router-dom";
 
+import check from '../../assets/check.png';
+import close from '../../assets/close.png';
+
 
 const ModalForm = ({ createProfile, updateProfile,
                      clearProfileData, toggleForm,
@@ -133,7 +136,7 @@ const ModalForm = ({ createProfile, updateProfile,
                 />
               </label>
             </div>
-            <div>
+            <div className={styles.labelWrapper}>
               <label>
                 email:
                 <input name="email"
@@ -144,16 +147,18 @@ const ModalForm = ({ createProfile, updateProfile,
               </label>
             </div>
             <div className={styles.genderList}>
-              role:
-              <div>
-                <input id="user" type="radio" onChange={handleChange}
-                       name="isAdmin" value="false" required/>
-                <label htmlFor="user">user</label>
-              </div>
-              <div>
-                <input id="admin" type="radio" onChange={handleChange}
-                       name="isAdmin" value="true" required/>
-                <label htmlFor="admin">admin</label>
+              <span>role:</span>
+              <div className={styles.radioWrapper}>
+                <label>
+                  <input id="user" type="radio" onChange={handleChange}
+                         name="isAdmin" value="false" required/>
+                  <span>user</span>
+                </label>
+                <label>
+                  <input id="admin" type="radio" onChange={handleChange}
+                         name="isAdmin" value="true" required/>
+                  admin
+                </label>
               </div>
             </div>
           </>
@@ -206,8 +211,18 @@ const ModalForm = ({ createProfile, updateProfile,
             </div>
           </>
         )}
-        <button onClick={submitHandler}>Save</button>
-        <button onClick={handleClose}>Close</button>
+        <div className={styles.buttonsWrapper}>
+          <button onClick={submitHandler}
+                  style={{
+                    backgroundImage: `url(${check})`
+                  }}
+          />
+          <button onClick={handleClose}
+                  style={{
+                    backgroundImage: `url(${close})`
+                  }}
+          />
+        </div>
       </div>
     </div>
   )
