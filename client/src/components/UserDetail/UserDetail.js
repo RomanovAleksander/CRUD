@@ -1,16 +1,19 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect} from 'react';
 import styles from "./UserDetail.module.scss";
 import {useHttp} from "../../hooks/http.hook";
 import {AuthContext} from "../../context/AuthContext";
 import {useParams} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
 
-export const UserDetail = () => {
+import {setUser, changeUser} from '../../actions/users/actions';
+import {connect} from "react-redux";
+import {toggleForm} from "../../actions/modal/actions";
+
+const UserDetail = ({ user, setUser, changeUser, toggleForm }) => {
   const {request, loading} = useHttp();
   const {token} = useContext(AuthContext);
   const userId = useParams().id;
   const auth = useContext(AuthContext);
-  const [user, setUser] = useState({});
 
   const showToast = (message, type) => {
     toast[`${type}`](message, {
@@ -31,8 +34,10 @@ export const UserDetail = () => {
         Authorization: `Bearer ${token}`
       });
       setUser(data);
-    } catch (e) {}
-  }, [request, token])
+    } catch (e) {
+      console.log(e.message)
+    }
+  }, [request, token, userId, setUser])
 
   const fetchUserDelete = useCallback(async () => {
     try {
@@ -42,7 +47,7 @@ export const UserDetail = () => {
       if (data.id === userId) auth.logout();
       showToast(data.message, 'success');
     } catch (e) {}
-  }, [request, token])
+  }, [request, token, userId, auth])
 
   useEffect(() => {
     fetchUser();
@@ -51,6 +56,12 @@ export const UserDetail = () => {
   const handleDelete = () => {
     fetchUserDelete()
   }
+
+  const handleEdit = () => {
+    toggleForm()
+    changeUser()
+  }
+
 
   return (
     <div className={styles.container}>
@@ -61,7 +72,7 @@ export const UserDetail = () => {
           <div>{user.email}</div>
           <div>{user.isAdmin ? 'admin' : 'user'}</div>
           <div className={styles.buttonsWrapper}>
-            <button className={styles.button}>edit</button>
+            <button className={styles.button} onClick={handleEdit}>edit</button>
             <button className={styles.button} onClick={handleDelete}>delete</button>
           </div>
         </div>
@@ -69,3 +80,18 @@ export const UserDetail = () => {
     </div>
   )
 }
+
+const mapDispatchToProps = {
+  setUser,
+  changeUser,
+  toggleForm
+};
+
+const mapStateToProps = state => ({
+  user: state.user.user
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserDetail);

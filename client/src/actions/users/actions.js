@@ -1,8 +1,16 @@
 import {
+  SET_USER,
   CHANGE_USER,
   UPDATE_USER,
   CLEAR_USER_DATA
 } from './types';
+
+const setUser = (item) => ({
+  type: SET_USER,
+  payload: {
+    ...item
+  }
+});
 
 const changeUser = (id) => ({
   type: CHANGE_USER,
@@ -23,6 +31,7 @@ const clearUserData = () => ({
 })
 
 export {
+  setUser,
   changeUser,
   updateUser,
   clearUserData

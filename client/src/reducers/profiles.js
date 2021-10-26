@@ -49,7 +49,6 @@ export const profiles = (state = initialState, action) => {
           ...payload
         } : profile
       });
-      console.log(updatedProfiles)
 
       return {
         ...state,
