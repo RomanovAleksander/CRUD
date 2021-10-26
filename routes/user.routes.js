@@ -8,4 +8,8 @@ router.get('/', auth, role, controller.getUsers)
 
 router.get('/:id', auth, role, controller.getUser)
 
+router.post('/update', auth, role, controller.updateUser)
+
+router.delete('/delete', auth, role, controller.deleteUser)
+
 module.exports = router;

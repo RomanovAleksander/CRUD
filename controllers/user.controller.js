@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Profile = require("../models/Profile");
 
 class userController {
   async getUsers(req, res) {
@@ -16,6 +17,25 @@ class userController {
       res.json(user);
     } catch (e) {
       res.status(500).json({ message: 'Something went wrong, try one more time'});
+    }
+  }
+
+  async updateUser(req, res) {
+    try {
+      await User.findByIdAndUpdate(req.body._id, {...req.body});
+      res.status(201).json({ message: 'Profile updated', profile: req.body });
+    } catch (e) {
+      res.status(500).json({ message: 'Something went wrong, try one more time' });
+    }
+  }
+
+  async deleteUser(req, res) {
+    try {
+      const user = await User.findByIdAndDelete(req.body.userId);
+      await Profile.find({ owner: req.body.userId })
+      res.status(201).json({ message: 'User deleted', id: user._id });
+    } catch (e) {
+      res.status(500).json({ message: 'Something went wrong, try one more time' });
     }
   }
 }
