@@ -12,11 +12,10 @@ const Users = () => {
 
   const fetchUsers = useCallback(async () => {
     try {
-        const data = await request('/api/auth/', 'GET', null, {
+        const data = await request('/api/user/', 'GET', null, {
           Authorization: `Bearer ${token}`
         });
         setUsers(data);
-      console.log(data)
     } catch (e) {}
   }, [request, token])
 

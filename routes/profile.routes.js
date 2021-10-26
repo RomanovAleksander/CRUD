@@ -1,90 +1,18 @@
 const {Router} = require('express');
 const router = Router();
 const auth = require('../middleware/auth.middleware');
-const User = require('../models/User');
-const Profile = require('../models/Profile');
-const getAdultsCount = require('../utils/profiles');
+const controller = require('../controllers/profile.controller');
 
-router.post('/create', auth, async (req, res) => {
-  try {
-    const {name, gender, birthdate, city} = req.body;
+router.post('/create', auth, controller.createProfile)
 
-    const profile = new Profile({
-      name, gender, birthdate, city, owner: req.User.userId
-    })
+router.post('/update', auth, controller.updateProfile)
 
-    await profile.save();
+router.delete('/delete', auth, controller.deleteProfile)
 
-    await User.findByIdAndUpdate(req.User.userId, {
-      $push: {
-        profiles: profile._id
-      }
-    })
+router.get('/all', auth, controller.getProfiles)
 
-    res.status(201).json({ message: 'Profile created', profile });
-  } catch (e) {
-    res.status(500).json({ message: 'Something went wrong, try one more time' });
-  }
-})
+router.get('/', auth, controller.getProfilesByUser)
 
-router.post('/update', auth, async (req, res) => {
-  try {
-    const profile = await Profile.findByIdAndUpdate(req.body._id, {...req.body});
-    res.status(201).json({ message: 'Profile updated', profile: req.body });
-  } catch (e) {
-    res.status(500).json({ message: 'Something went wrong, try one more time' });
-  }
-})
-
-router.delete('/delete', auth, async (req, res) => {
-  try {
-    await Profile.findByIdAndDelete(req.body.id);
-    await User.findByIdAndUpdate(req.User.userId, {
-      $pull: {
-        profiles: req.body.id
-      }
-    })
-    res.status(201).json({ message: 'Profile deleted' });
-  } catch (e) {
-    res.status(500).json({ message: 'Something went wrong, try one more time' });
-  }
-})
-
-router.get('/all', auth, async (req, res) => {
-  try {
-    const profiles = await Profile.find();
-    res.json({profiles, adults: getAdultsCount(profiles)});
-  } catch (e) {
-    res.status(500).json({ message: 'Something went wrong, try one more time'});
-  }
-})
-
-router.get('/', auth, async (req, res) => {
-  try {
-    console.log(req.headers);
-    const ownerValue = (value) => Profile.find({ owner: value });
-
-    if (req.headers.params === 'undefined') {
-      const profiles = await ownerValue(req.User.userId);
-      res.json(profiles);
-    } else {
-      const profiles = await ownerValue(req.headers.params);
-      res.json(profiles);
-    }
-  } catch (e) {
-    res.status(500).json({ message: 'Something went wrong, try one more time'});
-  }
-})
-
-
-router.get('/:id', auth, async (req, res) => {
-  try {
-    const profile = await Profile.findById(req.params.id);
-    res.json(profile);
-  } catch (e) {
-    res.status(500).json({ message: 'Something went wrong, try one more time'});
-  }
-})
+router.get('/:id', auth, controller.getProfilesById)
 
 module.exports = router;
-

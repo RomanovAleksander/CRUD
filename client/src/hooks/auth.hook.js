@@ -22,7 +22,6 @@ export const useAuth = () => {
       const data = await request('/api/auth/token', 'GET', null, {
         Authorization: `Bearer ${jwtToken}`
       });
-      console.log(data)
 
       setToken(jwtToken);
       setUserId(data.userId);

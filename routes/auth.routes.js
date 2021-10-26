@@ -1,9 +1,8 @@
 const {Router} = require('express');
 const {check} = require('express-validator');
 const auth = require("../middleware/auth.middleware");
-const role = require("../middleware/role.middleware");
 const router = Router();
-const controller = require('../authController');
+const controller = require('../controllers/auth.controller');
 
 // /api/auth/register
 router.post(
@@ -26,8 +25,6 @@ router.post(
   ],
   controller.login
 )
-
-router.get('/', auth, role, controller.getUsers)
 
 router.get('/token', auth, controller.checkToken)
 
