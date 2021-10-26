@@ -4,7 +4,7 @@ import {
   UPDATE_PROFILE,
   CHANGE_PROFILE,
   DELETE_PROFILE,
-  CLEAR_FORM
+  CLEAR_PROFILE_DATA
 } from './types';
 
 const setProfiles = (items) => ({
@@ -42,8 +42,8 @@ const updateProfile = (items) => ({
   }
 });
 
-const clearForm = () => ({
-  type: CLEAR_FORM
+const clearProfileData = () => ({
+  type: CLEAR_PROFILE_DATA
 })
 
 export {
@@ -52,5 +52,5 @@ export {
   changeProfile,
   updateProfile,
   deleteProfile,
-  clearForm
+  clearProfileData
 };

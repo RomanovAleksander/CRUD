@@ -1,7 +1,18 @@
 import Profiles from "../components/Profiles/Profiles";
+import ModalForm from "../components/ModalForm/ModalForm";
+import {connect} from "react-redux";
 
-export const ProfilesPage = () => {
+const ProfilesPage = ({ isOpen }) => {
   return (
-    <Profiles/>
+    <>
+      { isOpen && <ModalForm /> }
+      <Profiles />
+    </>
   )
 }
+
+const mapStateToProps = state => ({
+  isOpen: state.modal.isOpen
+});
+
+export default connect(mapStateToProps)(ProfilesPage);

@@ -1,16 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react';
 import styles from './ModalForm.module.scss';
-import {ModalContext} from "../../context/ModalContext";
 import {useHttp} from "../../hooks/http.hook";
 import {AuthContext} from "../../context/AuthContext";
 import {ToastContainer, toast} from "react-toastify";
 
 import { connect } from 'react-redux';
-import {createProfile, updateProfile, clearForm} from '../../actions/profiles/actions';
+import {createProfile, updateProfile, clearProfileData} from '../../actions/profiles/actions';
+import {toggleForm} from '../../actions/modal/actions';
 import {useParams} from "react-router-dom";
 
 
-const ModalForm = ({ createProfile, updateProfile, clearForm, profile }) => {
+const ModalForm = ({ createProfile, updateProfile, clearProfileData, toggleForm, profile }) => {
   const defaultData = {
     name: '',
     gender: '',
@@ -19,7 +19,6 @@ const ModalForm = ({ createProfile, updateProfile, clearForm, profile }) => {
   };
   const auth = useContext(AuthContext);
   const {request} = useHttp();
-  const modal = useContext(ModalContext);
   const [profileData, setProfileData] = useState(defaultData);
 
   const userId = useParams().id;
@@ -60,27 +59,26 @@ const ModalForm = ({ createProfile, updateProfile, clearForm, profile }) => {
   }
 
   const handleClose = () => {
-    modal();
-    clearForm();
+    toggleForm();
+    clearProfileData();
   }
 
   const submitHandler = async () => {
     try {
       if (!profile) {
-        console.log(userId)
         const data = await request('/api/profile/create', 'POST', {...profileData, userId}, {
           Authorization: `Bearer ${auth.token}`
         });
         createProfile(data.profile);
         showToast(data.message, 'success');
-        modal();
+        toggleForm();
       } else {
         const data = await request('/api/profile/update', 'POST', {...profile, ...profileData}, {
           Authorization: `Bearer ${auth.token}`
         });
         updateProfile(data.profile);
         showToast(data.message, 'success');
-        modal();
+        toggleForm();
       }
     } catch (e) {}
   }
@@ -143,7 +141,8 @@ const ModalForm = ({ createProfile, updateProfile, clearForm, profile }) => {
 const mapDispatchToProps = {
   createProfile,
   updateProfile,
-  clearForm
+  clearProfileData,
+  toggleForm
 };
 
 const mapStateToProps = state => ({

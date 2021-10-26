@@ -1,16 +1,15 @@
 import React, {useCallback, useContext, useEffect} from "react";
 import { connect } from 'react-redux';
 import {AuthContext} from "../../context/AuthContext";
-import {ModalContext} from "../../context/ModalContext";
 import {setProfiles, deleteProfile, changeProfile} from '../../actions/profiles/actions';
+import {toggleForm} from '../../actions/modal/actions';
 import {useHttp} from "../../hooks/http.hook";
 import {Loader} from "../Loader/Loader";
 import styles from './Profiles.module.scss';
 import {toast, ToastContainer} from "react-toastify";
 import {useParams} from "react-router-dom";
 
-const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile }) => {
-  const modal = useContext(ModalContext);
+const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleForm }) => {
   const {token} = useContext(AuthContext);
   const {request, loading} = useHttp();
   const userId = useParams().id;
@@ -62,7 +61,7 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile }) => {
 
   const handleEdit = (id) => {
     changeProfile(id);
-    modal();
+    toggleForm();
   }
 
   if (loading) {
@@ -91,7 +90,7 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile }) => {
             )
           })}
           <div className={`${styles.profile} ${styles.pointer}`}
-               onClick={() => modal() }
+               onClick={() => toggleForm() }
           >
             <div className={styles.createBtn}>
               <div className={styles.vertical} />
@@ -108,7 +107,8 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile }) => {
 const mapDispatchToProps = {
   setProfiles,
   deleteProfile,
-  changeProfile
+  changeProfile,
+  toggleForm
 };
 
 const mapStateToProps = state => ({

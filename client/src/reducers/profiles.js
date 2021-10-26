@@ -4,7 +4,7 @@ import {
   CHANGE_PROFILE,
   UPDATE_PROFILE,
   DELETE_PROFILE,
-  CLEAR_FORM
+  CLEAR_PROFILE_DATA
 } from '../actions/profiles/types';
 
 const initialState = {
@@ -57,7 +57,7 @@ export const profiles = (state = initialState, action) => {
         profile: null
       }
 
-    case CLEAR_FORM:
+    case CLEAR_PROFILE_DATA:
       return {
         ...state,
         profile: null
