@@ -7,19 +7,15 @@ class profileController {
     try {
       const {name, gender, birthdate, city, userId} = req.body;
       let id;
-
       if (userId === undefined) {
         id = req.User.userId;
       } else {
         id = userId;
       }
-
       const profile = new Profile({
         name, gender, birthdate, city, owner: id
       })
-
       await profile.save();
-
       await User.findByIdAndUpdate(id, {
         $push: {
           profiles: profile._id
@@ -66,21 +62,14 @@ class profileController {
 
   async getProfilesByUser(req, res) {
     try {
-      const ownerValue = (value) => Profile.find({ owner: value });
-
-      if (req.headers.params === 'undefined') {
-        const profiles = await ownerValue(req.User.userId);
-        res.json(profiles);
-      } else {
-        const profiles = await ownerValue(req.headers.params);
-        res.json(profiles);
-      }
+      const profiles = await Profile.find({ owner: req.User.userId });
+      res.json(profiles);
     } catch (e) {
-      res.status(500).json({ message: 'Something went wrong, try one more time'});
+      res.status(500).json({message: 'Something went wrong, try one more time'});
     }
   }
 
-  async getProfilesById(req, res) {
+  async getProfilesByUserId(req, res) {
     try {
       const profile = await Profile.find({ owner: req.params.id });
       res.json(profile);

@@ -13,6 +13,6 @@ router.get('/all', auth, controller.getProfiles)
 
 router.get('/', auth, controller.getProfilesByUser)
 
-router.get('/:id', auth, controller.getProfilesById)
+router.get('/:id', auth, controller.getProfilesByUserId)
 
 module.exports = router;

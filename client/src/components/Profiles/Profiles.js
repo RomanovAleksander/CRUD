@@ -29,17 +29,23 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleF
 
   const fetchProfiles = useCallback(async () => {
     try {
-      const data = await request('/api/profile/', 'GET', null,{
-        Authorization: `Bearer ${token}`,
-        params: userId
-      });
-      setProfiles(data);
+      if (userId) {
+        const data = await request(`/api/profile/${userId}`, 'GET', null,{
+          Authorization: `Bearer ${token}`
+        });
+        setProfiles(data);
+      } else {
+        const data = await request(`/api/profile/`, 'GET', null,{
+          Authorization: `Bearer ${token}`
+        });
+        setProfiles(data);
+      }
     } catch (e) {
       console.log(e.message)
     }
   }, [token, request, setProfiles, userId])
 
-  const fetchDeleteProfile = useCallback(async (id) => {
+  const fetchProfileDelete = useCallback(async (id) => {
     try {
       const data = await request('/api/profile/delete', 'DELETE', {id}, {
         Authorization: `Bearer ${token}`
@@ -56,7 +62,7 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleF
   }, [fetchProfiles])
 
   const handleDelete = (id) => {
-    fetchDeleteProfile(id)
+    fetchProfileDelete(id)
   }
 
   const handleEdit = (id) => {
