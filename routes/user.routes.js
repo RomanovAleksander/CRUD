@@ -6,4 +6,6 @@ const controller = require('../controllers/user.controller');
 
 router.get('/', auth, role, controller.getUsers)
 
+router.get('/:id', auth, role, controller.getUser)
+
 module.exports = router;

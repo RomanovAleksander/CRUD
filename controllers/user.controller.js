@@ -9,6 +9,15 @@ class userController {
       res.status(500).json({ message: 'Something went wrong, try one more time'});
     }
   }
+
+  async getUser(req, res) {
+    try {
+      const user = await User.findOne({ _id: req.params.id });
+      res.json(user);
+    } catch (e) {
+      res.status(500).json({ message: 'Something went wrong, try one more time'});
+    }
+  }
 }
 
 module.exports = new userController();
