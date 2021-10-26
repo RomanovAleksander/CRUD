@@ -66,6 +66,17 @@ const ModalForm = ({ createProfile, updateProfile,
     clearProfileData();
   }
 
+  const changeToken = async (user) => {
+    try {
+      const data = await request('/api/auth/generate', 'POST', {email: user.email}, {
+        Authorization: `Bearer ${auth.token}`
+      });
+      auth.login(data.token);
+    } catch (e) {
+      console.log(e.message)
+    }
+  }
+
   const submitHandler = async () => {
     try {
       if (!isUser) {
@@ -88,6 +99,10 @@ const ModalForm = ({ createProfile, updateProfile,
         const data = await request('/api/user/update', 'POST', {user: {...formData}, id: userId}, {
           Authorization: `Bearer ${auth.token}`
         });
+        if (data.user._id === userId && data.user.isAdmin !== user.isAdmin) {
+          updateUser(null);
+          await changeToken(data.user);
+        }
         showToast(data.message, 'success');
         updateUser(data.user);
         setUser(data.user);

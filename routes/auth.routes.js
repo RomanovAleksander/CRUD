@@ -28,4 +28,6 @@ router.post(
 
 router.get('/token', auth, controller.checkToken)
 
+router.post('/generate', auth, controller.getNewToken)
+
 module.exports = router;

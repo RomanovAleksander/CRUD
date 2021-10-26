@@ -76,6 +76,18 @@ class authController {
     }
   }
 
+  async getNewToken(req, res) {
+    try {
+      const {email} = req.body;
+      const user = await User.findOne({ email });
+      const token = generateAccessToken(user._id, user.isAdmin, user.username);
+
+      res.json({ token, userId: user.id, isAdmin: user.isAdmin });
+    } catch (e) {
+      res.status(400).json({ message: 'Error' });
+    }
+  }
+
   async checkToken(req, res) {
   try {
     const token = req.headers.authorization.split(' ')[1]; // "Bearer TOKEN"
