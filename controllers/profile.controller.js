@@ -5,15 +5,22 @@ const getAdultsCount = require("../utils/profiles");
 class profileController {
   async createProfile(req, res) {
     try {
-      const {name, gender, birthdate, city} = req.body;
+      const {name, gender, birthdate, city, userId} = req.body;
+      let id;
+
+      if (userId === undefined) {
+        id = req.User.userId;
+      } else {
+        id = userId;
+      }
 
       const profile = new Profile({
-        name, gender, birthdate, city, owner: req.User.userId
+        name, gender, birthdate, city, owner: id
       })
 
       await profile.save();
 
-      await User.findByIdAndUpdate(req.User.userId, {
+      await User.findByIdAndUpdate(id, {
         $push: {
           profiles: profile._id
         }

@@ -3,7 +3,7 @@ import {UsersPage} from "./pages/UsersPage";
 import {ProfilesPage} from "./pages/ProfilesPage";
 import {AuthPage} from "./pages/AuthPage";
 import {DashboardPage} from "./pages/DashboardPage";
-import Profiles from "./components/Profiles/Profiles";
+import {UserDetailPage} from "./pages/UserDetailPage";
 
 export const useRoutes = (isAuthenticated, isAdmin, isSignIn) => {
   if (isAuthenticated && !isAdmin) {
@@ -30,7 +30,7 @@ export const useRoutes = (isAuthenticated, isAdmin, isSignIn) => {
           <DashboardPage />
         </Route>
         <Route path="/user/:id">
-          <Profiles />
+          <UserDetailPage />
         </Route>
         <Redirect to="/profiles" />
       </Switch>

@@ -7,6 +7,7 @@ import {ToastContainer, toast} from "react-toastify";
 
 import { connect } from 'react-redux';
 import {createProfile, updateProfile, clearForm} from '../../actions/profiles/actions';
+import {useParams} from "react-router-dom";
 
 
 const ModalForm = ({ createProfile, updateProfile, clearForm, profile }) => {
@@ -20,6 +21,8 @@ const ModalForm = ({ createProfile, updateProfile, clearForm, profile }) => {
   const {request} = useHttp();
   const modal = useContext(ModalContext);
   const [profileData, setProfileData] = useState(defaultData);
+
+  const userId = useParams().id;
 
   useEffect(() => {
     if (profile) {
@@ -64,7 +67,8 @@ const ModalForm = ({ createProfile, updateProfile, clearForm, profile }) => {
   const submitHandler = async () => {
     try {
       if (!profile) {
-        const data = await request('/api/profile/create', 'POST', {...profileData}, {
+        console.log(userId)
+        const data = await request('/api/profile/create', 'POST', {...profileData, userId}, {
           Authorization: `Bearer ${auth.token}`
         });
         createProfile(data.profile);
