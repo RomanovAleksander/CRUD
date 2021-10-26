@@ -8,7 +8,7 @@ import dashboard from '../../assets/dashboard.png';
 import users from '../../assets/users.png';
 import styles from './Header.module.scss';
 
-const Header = () => {
+const Header = ({ username }) => {
   const history = useHistory();
   const auth = useContext(AuthContext);
 
@@ -25,7 +25,7 @@ const Header = () => {
               style={{
           backgroundImage: `url(${auth.isAdmin ? adminAvatar : userAvatar})`
         }} />
-        <span>1White</span>
+        <span>{username}</span>
       </div>
       <div className={styles.wrapper}>
         { auth.isAdmin && (
