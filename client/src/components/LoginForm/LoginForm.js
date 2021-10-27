@@ -50,9 +50,9 @@ const LoginForm =  ({ isSignIn }) => {
   }
 
   const submitHandler = async (e) => {
-    const target = e.target.textContent;
+    e.preventDefault();
     try {
-      if (target === 'Sign Up') {
+      if (!isSignIn) {
         const data = await request('/api/auth/register', 'POST', {...userData});
         showToast(data.message, 'success');
         history.push('/');
@@ -73,23 +73,26 @@ const LoginForm =  ({ isSignIn }) => {
       <div className={styles.title}>
         {isSignIn ? 'Sign in' : 'Create your account'}
       </div>
-      <div className={styles.form}>
+      <form className={styles.form} onSubmit={submitHandler}>
         {!isSignIn && (
           <label>
             Username
-            <input type="username"
+            <input type="text"
                    name="username"
                    onChange={handleChange}
                    value={userData.username}
+                   minLength="1"
+                   required
             />
           </label>
         )}
         <label>
           Email
-          <input type="text"
+          <input type="email"
                  name="email"
                  onChange={handleChange}
                  value={userData.email}
+                 required
           />
         </label>
         <label>
@@ -98,6 +101,8 @@ const LoginForm =  ({ isSignIn }) => {
                  name="password"
                  onChange={handleChange}
                  value={userData.password}
+                 minLength="6"
+                 required
           />
         </label>
         {!isSignIn && (
@@ -110,7 +115,7 @@ const LoginForm =  ({ isSignIn }) => {
         )}
         <div className={styles.buttonsWrapper}>
           <button className={styles.submitButton}
-                  onClick={submitHandler}
+                  type="submit"
                   disabled={loading}
           >
             {isSignIn ? 'Sign In' : 'Sign Up'}
@@ -118,7 +123,7 @@ const LoginForm =  ({ isSignIn }) => {
           <span className={styles.divingLine} />
           <a href={`${!isSignIn ? '/' : '/signup'}`}>{!isSignIn ? 'Sign In' : 'Sign Up'}</a>
         </div>
-      </div>
+      </form>
     </div>
   )
 };

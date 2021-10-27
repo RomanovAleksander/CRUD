@@ -26,12 +26,15 @@
   justify-content: flex-start;
   flex-wrap: wrap;
 
-  a {
+  .userWrapper {
+    display: flex;
+    width: calc(100% / 4);
     text-decoration: none;
+    color: #4E4B66;
   }
 
-  a:focus {
-    color: #14142B;
+  .userWrapper:focus {
+    color: #4E4B66;
   }
 }
 
@@ -47,7 +50,7 @@
   margin-right: 16px;
   margin-left: 16px;
   margin-bottom: 60px;
-  width: 396px;
+  width: 100%;
   height: 208px;
 
   .title {

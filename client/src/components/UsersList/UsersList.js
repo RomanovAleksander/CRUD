@@ -6,7 +6,7 @@ export const UsersList = ({ users }) => {
   return (
     users.map((user) => {
         return (
-          <Link to={`/user/${user._id}`} key={user._id}>
+          <Link to={`/user/${user._id}`} key={user._id} className={styles.userWrapper}>
             <div className={styles.user}>
               <p className={styles.title}>{user.username}</p>
               <p className={styles.email}>{user.email}</p>
