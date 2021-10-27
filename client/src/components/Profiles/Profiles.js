@@ -10,6 +10,10 @@ import {toast, ToastContainer} from "react-toastify";
 import {useParams} from "react-router-dom";
 import {loadState} from "../../actions/users/actions";
 
+import edit from '../../assets/edit.svg';
+import deleteIcon from '../../assets/deleteIcon.svg';
+import plus from '../../assets/plus.svg';
+
 const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleForm, loadState, loadingState }) => {
   const {token} = useContext(AuthContext);
   const {request, loading} = useHttp();
@@ -90,9 +94,16 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleF
                 <p>{profile.birthdate.split('-').reverse().join('.')}</p>
                 <p>{profile.city}</p>
                 <div className={styles.buttonsWrapper}>
-                  <button className={styles.button} onClick={() => handleEdit(profile._id)}>edit</button>
+                  <button className={styles.button}
+                          onClick={() => handleEdit(profile._id)}
+                  >
+                    edit <img src={edit} alt="edit"/>
+                  </button>
                   <span className={styles.divingLine} />
-                  <button className={styles.button} onClick={() => handleDelete(profile._id)}>delete</button>
+                  <button className={styles.button}
+                          onClick={() => handleDelete(profile._id)}>
+                    delete <img src={deleteIcon} alt="delete"/>
+                  </button>
                 </div>
               </div>
             )
@@ -101,8 +112,7 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleF
                onClick={() => toggleForm() }
           >
             <div className={styles.createBtn}>
-              <div className={styles.vertical} />
-              <div className={styles.horizontal} />
+              <img src={plus} alt="create"/>
             </div>
             <p>Create new profile</p>
           </div>

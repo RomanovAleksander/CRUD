@@ -10,8 +10,8 @@ import {toggleForm} from '../../actions/modal/actions';
 import {clearUserData, setUser, updateUser, loadState} from '../../actions/users/actions';
 import {useParams} from "react-router-dom";
 
-import check from '../../assets/check.png';
-import close from '../../assets/close.png';
+import check from '../../assets/check.svg';
+import close from '../../assets/close.svg';
 
 
 const ModalForm = ({ createProfile, updateProfile,

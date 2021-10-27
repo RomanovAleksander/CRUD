@@ -9,8 +9,8 @@ import {setUser, changeUser} from '../../actions/users/actions';
 import {connect} from "react-redux";
 import {toggleForm} from "../../actions/modal/actions";
 
-import edit from '../../assets/edit.png';
-import deleteIcon from '../../assets/deleteIcon.png';
+import edit from '../../assets/edit.svg';
+import deleteIcon from '../../assets/deleteIcon.svg';
 
 const UserDetail = ({ user, setUser, changeUser, toggleForm, loadingState }) => {
   const {request, loading} = useHttp();

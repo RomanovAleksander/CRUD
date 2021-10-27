@@ -3,9 +3,9 @@ import {NavLink, useHistory} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext";
 import adminAvatar from '../../assets/adminAvatar.png';
 import userAvatar from '../../assets/userAvatar.png';
-import profiles from '../../assets/profiles.png';
-import dashboard from '../../assets/dashboard.png';
-import users from '../../assets/users.png';
+import profiles from '../../assets/profiles.svg';
+import dashboard from '../../assets/dashboard.svg';
+import users from '../../assets/users.svg';
 import styles from './Header.module.scss';
 
 const Header = ({ username }) => {
