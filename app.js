@@ -5,9 +5,8 @@ const path = require('path');
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-app.use(express.json({ extended: true }));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, './client/build')));
 
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/user', require('./routes/user.routes'));
