@@ -9,8 +9,8 @@ import {setUser, changeUser} from '../../actions/users/actions';
 import {connect} from "react-redux";
 import {toggleForm} from "../../actions/modal/actions";
 
-import edit from '../../assets/edit.svg';
-import deleteIcon from '../../assets/deleteIcon.svg';
+import { EditIconComponent } from '../../assets/EditIconComponent';
+import { DeleteIconComponent } from '../../assets/DeleteIconComponent';
 
 const UserDetail = ({ user, setUser, changeUser, toggleForm, loadingState }) => {
   const {request, loading} = useHttp();
@@ -75,18 +75,16 @@ const UserDetail = ({ user, setUser, changeUser, toggleForm, loadingState }) => 
           <div className={styles.userTitle}>{user.email}</div>
           <div className={styles.role}>{user.isAdmin ? 'admin' : 'user'}</div>
           <div className={styles.buttonsWrapper}>
-            <button className={styles.button}
+            <button className={`${styles.button} ${styles.edit}`}
                     onClick={handleEdit}
-                    style={{
-                      backgroundImage: `url(${edit})`
-                    }}
-            />
-            <button className={styles.button}
+            >
+              <EditIconComponent />
+            </button>
+            <button className={`${styles.button} ${styles.delete}`}
                     onClick={handleDelete}
-                    style={{
-                      backgroundImage: `url(${deleteIcon})`
-                    }}
-            />
+            >
+              <DeleteIconComponent />
+            </button>
           </div>
         </div>
       )}

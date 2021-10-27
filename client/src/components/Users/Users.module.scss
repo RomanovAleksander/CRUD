@@ -29,6 +29,10 @@
   a {
     text-decoration: none;
   }
+
+  a:focus {
+    color: #14142B;
+  }
 }
 
 .user {

@@ -10,8 +10,8 @@ import {toast, ToastContainer} from "react-toastify";
 import {useParams} from "react-router-dom";
 import {loadState} from "../../actions/users/actions";
 
-import edit from '../../assets/edit.svg';
-import deleteIcon from '../../assets/deleteIcon.svg';
+import { EditIconComponent } from '../../assets/EditIconComponent';
+import { DeleteIconComponent } from '../../assets/DeleteIconComponent';
 import plus from '../../assets/plus.svg';
 
 const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleForm, loadState, loadingState }) => {
@@ -94,15 +94,17 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleF
                 <p>{profile.birthdate.split('-').reverse().join('.')}</p>
                 <p>{profile.city}</p>
                 <div className={styles.buttonsWrapper}>
-                  <button className={styles.button}
+                  <button className={`${styles.button} ${styles.edit}`}
                           onClick={() => handleEdit(profile._id)}
                   >
-                    edit <img src={edit} alt="edit"/>
+                    edit
+                    <EditIconComponent />
                   </button>
                   <span className={styles.divingLine} />
-                  <button className={styles.button}
+                  <button className={`${styles.button} ${styles.delete}`}
                           onClick={() => handleDelete(profile._id)}>
-                    delete <img src={deleteIcon} alt="delete"/>
+                    delete
+                    <DeleteIconComponent />
                   </button>
                 </div>
               </div>

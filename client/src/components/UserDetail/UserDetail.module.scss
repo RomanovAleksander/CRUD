@@ -40,13 +40,25 @@
   width: 83px;
 
   .button {
-    display: block;
-    width: 24px;
-    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: none;
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
+  }
+
+  .edit:hover {
+    path {
+      stroke: #624AF2;
+    }
+  }
+
+  .delete:hover {
+    path {
+      stroke: #EB0055;
+    }
   }
 }

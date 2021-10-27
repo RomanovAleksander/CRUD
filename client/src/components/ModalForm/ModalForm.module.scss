@@ -111,6 +111,26 @@
       background-position: center;
       cursor: pointer;
     }
+
+    .check:hover {
+      background: #624AF2;
+      color: white;
+
+      path {
+        stroke: white;
+        fill: white;
+      }
+    }
+
+    .close:hover {
+      background: #624AF2;
+      color: white;
+
+      path {
+        stroke: white;
+        fill: white;
+      }
+    }
   }
 }
 
