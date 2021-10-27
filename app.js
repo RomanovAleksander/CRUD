@@ -1,8 +1,11 @@
 const express = require('express');
 const config = require('config');
 const mongoose = require('mongoose');
+const path = require('path');
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use(express.json({ extended: true }));
 
