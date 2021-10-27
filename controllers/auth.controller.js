@@ -4,9 +4,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 
-const generateAccessToken = (id, isAdmin, username) => {
+const generateAccessToken = (id, isAdmin) => {
   return jwt.sign(
-    { userId: id, isAdmin: isAdmin, username: username },
+    { userId: id, isAdmin: isAdmin },
     config.get('jwtSecret'),
     { expiresIn: '730h' }
   );
@@ -68,7 +68,7 @@ class authController {
         return res.status(400).json({ message: 'Invalid password, try again' });
       }
 
-      const token = generateAccessToken(user._id, user.isAdmin, user.username);
+      const token = generateAccessToken(user._id, user.isAdmin);
 
       res.json({ token, userId: user.id, isAdmin: user.isAdmin });
     } catch (e) {
@@ -80,7 +80,7 @@ class authController {
     try {
       const {email} = req.body;
       const user = await User.findOne({ email });
-      const token = generateAccessToken(user._id, user.isAdmin, user.username);
+      const token = generateAccessToken(user._id, user.isAdmin);
 
       res.json({ token, userId: user.id, isAdmin: user.isAdmin });
     } catch (e) {
@@ -103,7 +103,7 @@ class authController {
       return res.status(401).json({ message: 'No authorization' })
     }
 
-    res.json(decoded);
+    res.json({decoded: decoded, username: user.username});
   } catch (e) {
     res.status(401).json({ message: 'No authorization' });
   }

@@ -7,19 +7,21 @@ import {ToastContainer, toast} from "react-toastify";
 import { connect } from 'react-redux';
 import {createProfile, updateProfile, clearProfileData} from '../../actions/profiles/actions';
 import {toggleForm} from '../../actions/modal/actions';
-import {clearUserData, setUser, updateUser, loadState} from '../../actions/users/actions';
+import {clearUserData, setUser, updateUser, loadState, setUsername} from '../../actions/users/actions';
 import {useParams} from "react-router-dom";
 
 import {CheckIconComponent} from "../../assets/CheckIconComponent";
 import {CloseIconComponent} from "../../assets/CloseIconComponent";
 
 
-const ModalForm = ({ createProfile, updateProfile,
+const ModalForm = ({
+                     createProfile, updateProfile,
                      clearProfileData, toggleForm,
                      profile, user,
                      isUser = false,
                      updateUser, setUser, clearUserData,
-                     loadState}) => {
+                     loadState, setUsername
+}) => {
   const auth = useContext(AuthContext);
   const {request} = useHttp();
   const [formData, setFormData] = useState();
@@ -57,10 +59,17 @@ const ModalForm = ({ createProfile, updateProfile,
   }
 
   const handleChange = (event) => {
+    const isTrue = (value) => {
+      if (value === 'true' || value === 'false') {
+        return  (value === 'true');
+      }
+      return value;
+    };
+
     setFormData(prevState => {
       return {
         ...prevState,
-        [event.target.name]: event.target.value
+        [event.target.name]: isTrue(event.target.value)
       }
     });
   }
@@ -104,17 +113,18 @@ const ModalForm = ({ createProfile, updateProfile,
         const data = await request('/api/user/update', 'POST', {user: {...formData}, id: userId}, {
           Authorization: `Bearer ${auth.token}`
         });
-        console.log(data, {user: {...formData}, id: userId})
         if (data.user._id === auth.userId && data.user.isAdmin !== formData.isAdmin) {
           loadState();
           await changeToken(data.user);
           toggleForm();
           return;
         }
-        const isTrue = (formData.isAdmin === 'true');
+        if (data.user._id === auth.userId && data.user.username !== formData.username) {
+          setUsername(formData.username)
+        }
         showToast(data.message, 'success');
-        updateUser({...formData, isAdmin: isTrue});
-        setUser({...formData, isAdmin: isTrue});
+        updateUser(formData);
+        setUser(formData);
         toggleForm();
       }
     } catch (e) {
@@ -153,12 +163,16 @@ const ModalForm = ({ createProfile, updateProfile,
               <div className={styles.radioWrapper}>
                 <label>
                   <input id="user" type="radio" onChange={handleChange}
-                         name="isAdmin" value={false} required/>
+                         name="isAdmin" value="false" required
+                         checked={formData.isAdmin === false}
+                  />
                   <span>user</span>
                 </label>
                 <label>
                   <input id="admin" type="radio" onChange={handleChange}
-                         name="isAdmin" value={true} required/>
+                         name="isAdmin" value="true" required
+                         checked={formData.isAdmin === true}
+                  />
                   admin
                 </label>
               </div>
@@ -182,12 +196,16 @@ const ModalForm = ({ createProfile, updateProfile,
               <div className={styles.radioWrapper}>
                 <label>
                   <input id="male" type="radio" onChange={handleChange}
-                         name="gender" value="male" required/>
+                         name="gender" value="male" required
+                         checked={formData.gender === 'male'}
+                  />
                   <span>male</span>
                 </label>
                 <label>
                   <input id="female" type="radio" onChange={handleChange}
-                         name="gender" value="female" required/>
+                         name="gender" value="female" required
+                         checked={formData.gender === 'female'}
+                  />
                   <span>female</span>
                 </label>
               </div>
@@ -241,7 +259,8 @@ const mapDispatchToProps = {
   setUser,
   updateUser,
   clearUserData,
-  loadState
+  loadState,
+  setUsername
 };
 
 const mapStateToProps = state => ({

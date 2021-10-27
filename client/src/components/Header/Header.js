@@ -7,6 +7,7 @@ import profiles from '../../assets/profiles.svg';
 import dashboard from '../../assets/dashboard.svg';
 import users from '../../assets/users.svg';
 import styles from './Header.module.scss';
+import {connect} from "react-redux";
 
 const Header = ({ username }) => {
   const history = useHistory();
@@ -58,4 +59,9 @@ const Header = ({ username }) => {
   );
 }
 
-export default Header;
+const mapStateToProps = state => ({
+  username: state.user.username
+});
+
+export default connect(mapStateToProps,)(Header);
+

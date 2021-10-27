@@ -1,5 +1,6 @@
 import {
   SET_USER,
+  SET_USERNAME,
   CHANGE_USER,
   UPDATE_USER,
   CLEAR_USER_DATA,
@@ -8,6 +9,7 @@ import {
 
 const initialState = {
   user: {},
+  username: null,
   isUser: false,
   loadingState: false
 };
@@ -19,6 +21,12 @@ export const user = (state = initialState, action) => {
       return {
         ...state,
         user: payload
+      }
+
+    case SET_USERNAME:
+      return {
+        ...state,
+        username: payload.username
       }
 
     case CHANGE_USER:

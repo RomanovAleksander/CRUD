@@ -1,15 +1,16 @@
 import {useState, useCallback, useEffect} from 'react';
 import {useHttp} from './http.hook';
+import { useDispatch } from "react-redux";
 
 const storageName = 'userData';
 
-export const useAuth = () => {
+const useAuth = () => {
   const [token, setToken] = useState(null);
   const [ready, setReady] = useState(false);
   const [userId, setUserId] = useState(null);
   const [isAdmin, setIsAdmin] = useState(null);
-  const [username, setUsername] = useState(null);
   const {request, loading} = useHttp();
+  const dispatch = useDispatch();
 
   const logout = useCallback(() => {
     setToken(null);
@@ -25,9 +26,9 @@ export const useAuth = () => {
       });
 
       setToken(jwtToken);
-      setUserId(data.userId);
-      setIsAdmin(data.isAdmin);
-      setUsername(data.username);
+      setUserId(data.decoded.userId);
+      setIsAdmin(data.decoded.isAdmin);
+      dispatch({ type: "SET_USERNAME", payload: { username: data.username }});
 
       localStorage.setItem(storageName, JSON.stringify({
         token: jwtToken
@@ -36,7 +37,7 @@ export const useAuth = () => {
       console.log(e.message);
       logout();
     }
-  }, [request, logout]);
+  }, [request, logout, dispatch]);
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem(storageName));
@@ -47,5 +48,7 @@ export const useAuth = () => {
     setReady(true);
   }, [login])
 
-  return { login, logout, token, userId, isAdmin, username, loading, ready };
+  return { login, logout, token, userId, isAdmin, loading, ready };
 }
+
+export default useAuth;

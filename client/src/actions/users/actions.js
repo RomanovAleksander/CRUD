@@ -1,5 +1,6 @@
 import {
   SET_USER,
+  SET_USERNAME,
   CHANGE_USER,
   UPDATE_USER,
   CLEAR_USER_DATA,
@@ -12,6 +13,13 @@ const setUser = (item) => ({
     ...item
   }
 });
+
+const setUsername = (item) => ({
+  type: SET_USERNAME,
+  payload: {
+    username: item
+  }
+})
 
 const changeUser = (id) => ({
   type: CHANGE_USER,
@@ -37,6 +45,7 @@ const loadState = () => ({
 
 export {
   setUser,
+  setUsername,
   changeUser,
   updateUser,
   clearUserData,
