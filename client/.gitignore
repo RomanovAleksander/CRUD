@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/crud/build
+/build
 
 .idea
 
