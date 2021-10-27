@@ -1,11 +1,11 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {useHttp} from "../../hooks/http.hook";
-import {Loader} from "../Loader/Loader";
+import {AuthContext} from '../../context/AuthContext';
+import {useHttp} from '../../hooks/http.hook';
+import {Loader} from '../Loader/Loader';
 import styles from './Dashboard.module.scss';
-import {AuthContext} from "../../context/AuthContext";
 
 const Dashboard = () => {
-  const { token } = useContext(AuthContext);
+  const {token} = useContext(AuthContext);
   const {request, loading} = useHttp();
   const [users, setUsers] = useState(null);
   const [profiles, setProfiles] = useState(null);

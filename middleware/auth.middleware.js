@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const Profile = require("../models/Profile");
 
 module.exports = (req, res, next) => {
   if (req.method === 'OPTIONS') {

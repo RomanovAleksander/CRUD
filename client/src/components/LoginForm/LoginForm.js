@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {useHistory} from "react-router-dom";
+import {useHistory} from 'react-router-dom';
+import {AuthContext} from '../../context/AuthContext';
 import { ToastContainer, toast } from 'react-toastify';
-import {useHttp} from "../../hooks/http.hook";
-import {AuthContext} from "../../context/AuthContext";
+import {useHttp} from '../../hooks/http.hook';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './LoginForm.module.scss';
 
@@ -109,7 +109,8 @@ const LoginForm =  ({ isSignIn }) => {
           <label className={styles.isAdmin}>
             <input type="checkbox" name="isAdmin"
                    checked={userData.isAdmin}
-                   onChange={handleCheck}/>
+                   onChange={handleCheck}
+            />
             is admin
           </label>
         )}
@@ -121,7 +122,9 @@ const LoginForm =  ({ isSignIn }) => {
             {isSignIn ? 'Sign In' : 'Sign Up'}
           </button>
           <span className={styles.divingLine} />
-          <a href={`${!isSignIn ? '/' : '/signup'}`}>{!isSignIn ? 'Sign In' : 'Sign Up'}</a>
+          <a href={`${!isSignIn ? '/' : '/signup'}`}>
+            {!isSignIn ? 'Sign In' : 'Sign Up'}
+          </a>
         </div>
       </form>
     </div>

@@ -1,27 +1,22 @@
 import React, {useContext, useEffect, useState} from 'react';
-import styles from './ModalForm.module.scss';
-import {useHttp} from "../../hooks/http.hook";
-import {AuthContext} from "../../context/AuthContext";
-import {ToastContainer, toast} from "react-toastify";
-
 import { connect } from 'react-redux';
+import {useParams} from 'react-router-dom';
+import {AuthContext} from '../../context/AuthContext';
+import {ToastContainer, toast} from 'react-toastify';
+import {useHttp} from '../../hooks/http.hook';
 import {createProfile, updateProfile, clearProfileData} from '../../actions/profiles/actions';
 import {toggleForm} from '../../actions/modal/actions';
 import {clearUserData, setUser, updateUser, loadState, setUsername} from '../../actions/users/actions';
-import {useParams} from "react-router-dom";
+import {CheckIconComponent} from '../../assets/CheckIconComponent';
+import {CloseIconComponent} from '../../assets/CloseIconComponent';
+import styles from './ModalForm.module.scss';
 
-import {CheckIconComponent} from "../../assets/CheckIconComponent";
-import {CloseIconComponent} from "../../assets/CloseIconComponent";
 
-
-const ModalForm = ({
-                     createProfile, updateProfile,
+const ModalForm = ({ createProfile, updateProfile,
                      clearProfileData, toggleForm,
-                     profile, user,
-                     isUser = false,
+                     profile, user, isUser = false,
                      updateUser, setUser, clearUserData,
-                     loadState, setUsername
-}) => {
+                     loadState, setUsername }) => {
   const auth = useContext(AuthContext);
   const {request, error, clearError} = useHttp();
   const [formData, setFormData] = useState();
@@ -91,9 +86,7 @@ const ModalForm = ({
         Authorization: `Bearer ${auth.token}`
       });
       auth.login(data.token);
-    } catch (e) {
-      console.log(e.message)
-    }
+    } catch (e) {}
   }
 
   const submitHandler = async () => {
@@ -115,7 +108,6 @@ const ModalForm = ({
           toggleForm();
         }
       } else {
-        console.log(formData)
         const data = await request('/api/user/update', 'POST', {user: {...formData}, id: userId}, {
           Authorization: `Bearer ${auth.token}`
         });
@@ -256,15 +248,9 @@ const ModalForm = ({
 }
 
 const mapDispatchToProps = {
-  createProfile,
-  updateProfile,
-  clearProfileData,
-  toggleForm,
-  setUser,
-  updateUser,
-  clearUserData,
-  loadState,
-  setUsername
+  createProfile, updateProfile, clearProfileData,
+  toggleForm, setUser, updateUser,
+  clearUserData, loadState, setUsername
 };
 
 const mapStateToProps = state => ({

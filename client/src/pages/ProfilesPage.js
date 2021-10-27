@@ -1,6 +1,6 @@
-import Profiles from "../components/Profiles/Profiles";
-import ModalForm from "../components/ModalForm/ModalForm";
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
+import Profiles from '../components/Profiles/Profiles';
+import ModalForm from '../components/ModalForm/ModalForm';
 
 const ProfilesPage = ({ isOpen }) => {
   return (

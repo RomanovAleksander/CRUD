@@ -1,6 +1,6 @@
-import styles from "../Users/Users.module.scss";
-import React from "react";
-import {Link} from "react-router-dom";
+import React from 'react';
+import {Link} from 'react-router-dom';
+import styles from '../Users/Users.module.scss';
 
 export const UsersList = ({ users }) => {
   return (

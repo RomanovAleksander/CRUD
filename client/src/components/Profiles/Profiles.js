@@ -1,20 +1,21 @@
-import React, {useCallback, useContext, useEffect} from "react";
+import React, {useCallback, useContext, useEffect} from 'react';
 import { connect } from 'react-redux';
-import {AuthContext} from "../../context/AuthContext";
+import {AuthContext} from '../../context/AuthContext';
+import {useParams} from 'react-router-dom';
 import {setProfiles, deleteProfile, changeProfile} from '../../actions/profiles/actions';
 import {toggleForm} from '../../actions/modal/actions';
-import {useHttp} from "../../hooks/http.hook";
-import {Loader} from "../Loader/Loader";
-import styles from './Profiles.module.scss';
-import {toast, ToastContainer} from "react-toastify";
-import {useParams} from "react-router-dom";
-import {loadState} from "../../actions/users/actions";
-
-import { EditIconComponent } from '../../assets/EditIconComponent';
-import { DeleteIconComponent } from '../../assets/DeleteIconComponent';
+import {loadState} from '../../actions/users/actions';
+import {useHttp} from '../../hooks/http.hook';
+import {toast, ToastContainer} from 'react-toastify';
+import {Loader} from '../Loader/Loader';
+import {EditIconComponent} from '../../assets/EditIconComponent';
+import {DeleteIconComponent} from '../../assets/DeleteIconComponent';
 import plus from '../../assets/plus.svg';
+import styles from './Profiles.module.scss';
 
-const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleForm, loadState, loadingState }) => {
+const Profiles = ({ profiles, setProfiles, deleteProfile,
+                    changeProfile, toggleForm, loadState,
+                    loadingState }) => {
   const {token} = useContext(AuthContext);
   const {request, loading} = useHttp();
   const userId = useParams().id;
@@ -57,9 +58,7 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleF
       });
       deleteProfile(id);
       showToast(data.message, 'success');
-    } catch (e) {
-      console.log(e.message)
-    }
+    } catch (e) {}
   }, [token, request, deleteProfile])
 
   useEffect(() => {
@@ -125,11 +124,7 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleF
 }
 
 const mapDispatchToProps = {
-  setProfiles,
-  deleteProfile,
-  changeProfile,
-  toggleForm,
-  loadState
+  setProfiles, deleteProfile, changeProfile, toggleForm, loadState
 };
 
 const mapStateToProps = state => ({

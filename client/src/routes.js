@@ -1,9 +1,9 @@
-import {Switch, Route, Redirect} from "react-router-dom";
-import {UsersPage} from "./pages/UsersPage";
-import ProfilesPage from "./pages/ProfilesPage";
-import {AuthPage} from "./pages/AuthPage";
-import {DashboardPage} from "./pages/DashboardPage";
-import UserDetailPage from "./pages/UserDetailPage";
+import {Switch, Route, Redirect} from'react-router-dom';
+import {UsersPage} from './pages/UsersPage';
+import ProfilesPage from './pages/ProfilesPage';
+import {AuthPage} from './pages/AuthPage';
+import {DashboardPage} from './pages/DashboardPage';
+import UserDetailPage from './pages/UserDetailPage';
 
 export const useRoutes = (isAuthenticated, isAdmin, isSignIn) => {
   if (isAuthenticated && !isAdmin) {

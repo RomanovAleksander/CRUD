@@ -1,6 +1,6 @@
 import {useState, useCallback, useEffect} from 'react';
+import {useDispatch} from 'react-redux';
 import {useHttp} from './http.hook';
-import { useDispatch } from "react-redux";
 
 const storageName = 'userData';
 

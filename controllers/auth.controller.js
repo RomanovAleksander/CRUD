@@ -1,8 +1,8 @@
-const {validationResult} = require("express-validator");
-const User = require("../models/User");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const config = require("config");
+const {validationResult} = require('express-validator');
+const User = require('../models/User');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 const generateAccessToken = (id, isAdmin) => {
   return jwt.sign(

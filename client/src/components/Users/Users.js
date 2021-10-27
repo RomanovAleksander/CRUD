@@ -1,9 +1,9 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {AuthContext} from '../../context/AuthContext';
+import {useHttp} from '../../hooks/http.hook';
+import {Loader} from '../Loader/Loader';
+import {UsersList} from '../UsersList/UsersList';
 import styles from './Users.module.scss';
-import {useHttp} from "../../hooks/http.hook";
-import {Loader} from "../Loader/Loader";
-import {UsersList} from "../UsersList/UsersList";
-import {AuthContext} from "../../context/AuthContext";
 
 const Users = () => {
   const {request, loading} = useHttp();

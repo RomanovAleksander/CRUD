@@ -1,13 +1,13 @@
 import React, {useContext} from 'react';
-import {NavLink, useHistory} from "react-router-dom";
-import {AuthContext} from "../../context/AuthContext";
+import {connect} from 'react-redux';
+import {NavLink, useHistory} from 'react-router-dom';
+import {AuthContext} from '../../context/AuthContext';
 import adminAvatar from '../../assets/adminAvatar.png';
 import userAvatar from '../../assets/userAvatar.png';
 import profiles from '../../assets/profiles.svg';
 import dashboard from '../../assets/dashboard.svg';
 import users from '../../assets/users.svg';
 import styles from './Header.module.scss';
-import {connect} from "react-redux";
 
 const Header = ({ username }) => {
   const history = useHistory();
@@ -63,5 +63,4 @@ const mapStateToProps = state => ({
   username: state.user.username
 });
 
-export default connect(mapStateToProps,)(Header);
-
+export default connect(mapStateToProps)(Header);

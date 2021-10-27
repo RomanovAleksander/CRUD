@@ -1,16 +1,15 @@
 import React, {useCallback, useContext, useEffect} from 'react';
-import styles from "./UserDetail.module.scss";
-import {useHttp} from "../../hooks/http.hook";
-import {AuthContext} from "../../context/AuthContext";
-import {useParams} from "react-router-dom";
-import {toast, ToastContainer} from "react-toastify";
-
+import {connect} from 'react-redux';
+import {AuthContext} from '../../context/AuthContext';
+import {toast, ToastContainer} from 'react-toastify';
+import {useHttp} from '../../hooks/http.hook';
+import {useParams} from 'react-router-dom';
+import {Loader} from '../Loader/Loader';
 import {setUser, changeUser} from '../../actions/users/actions';
-import {connect} from "react-redux";
-import {toggleForm} from "../../actions/modal/actions";
-
+import {toggleForm} from '../../actions/modal/actions';
 import { EditIconComponent } from '../../assets/EditIconComponent';
 import { DeleteIconComponent } from '../../assets/DeleteIconComponent';
+import styles from './UserDetail.module.scss';
 
 const UserDetail = ({ user, setUser, changeUser, toggleForm, loadingState }) => {
   const {request, loading} = useHttp();
@@ -65,6 +64,9 @@ const UserDetail = ({ user, setUser, changeUser, toggleForm, loadingState }) => 
     changeUser()
   }
 
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <div className={styles.container}>
@@ -93,9 +95,7 @@ const UserDetail = ({ user, setUser, changeUser, toggleForm, loadingState }) => 
 }
 
 const mapDispatchToProps = {
-  setUser,
-  changeUser,
-  toggleForm
+  setUser, changeUser, toggleForm
 };
 
 const mapStateToProps = state => ({

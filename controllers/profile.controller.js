@@ -1,6 +1,6 @@
-const Profile = require("../models/Profile");
-const User = require("../models/User");
-const getAdultsCount = require("../utils/profiles");
+const Profile = require('../models/Profile');
+const User = require('../models/User');
+const getAdultsCount = require('../utils/profiles');
 
 class profileController {
   async createProfile(req, res) {
