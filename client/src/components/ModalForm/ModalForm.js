@@ -176,30 +176,33 @@ const ModalForm = ({ createProfile, updateProfile,
               </label>
             </div>
             <div className={styles.genderList}>
-              gender:
-              <div>
-                <input id="male" type="radio" onChange={handleChange}
-                       name="gender" value="male" required/>
-                <label htmlFor="male">male</label>
-              </div>
-              <div>
-                <input id="female" type="radio" onChange={handleChange}
-                       name="gender" value="female" required/>
-                <label htmlFor="female">female</label>
+              <span>gender:</span>
+              <div className={styles.radioWrapper}>
+                <label>
+                  <input id="male" type="radio" onChange={handleChange}
+                         name="gender" value="male" required/>
+                  <span>male</span>
+                </label>
+                <label>
+                  <input id="female" type="radio" onChange={handleChange}
+                         name="gender" value="female" required/>
+                  <span>female</span>
+                </label>
               </div>
             </div>
-            <div>
+            <div className={styles.labelWrapper}>
               <label>
                 birthdate:
                 <input name="birthdate"
                        data-date-format="DD MMMM YYYY"
                        type="date"
                        value={formData.birthdate || ''}
+                       max={new Date().toISOString().slice(0, -14)}
                        onChange={handleChange}
                 />
               </label>
             </div>
-            <div>
+            <div className={styles.labelWrapper}>
               <label>
                 city:
                 <input name="city"

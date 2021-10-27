@@ -25,6 +25,8 @@
   z-index: 2;
 
   .labelWrapper {
+    width: 100%;
+
     label {
       display: flex;
       flex-direction: column;
@@ -110,4 +112,8 @@
       cursor: pointer;
     }
   }
+}
+
+input[type='date'] {
+
 }

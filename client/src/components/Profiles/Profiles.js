@@ -87,7 +87,7 @@ const Profiles = ({ profiles, setProfiles, deleteProfile, changeProfile, toggleF
               <div className={styles.profile} key={profile._id}>
                 <p className={styles.title}>{profile.name}</p>
                 <p>{profile.gender}</p>
-                <p>{profile.birthdate}</p>
+                <p>{profile.birthdate.split('-').reverse().join('.')}</p>
                 <p>{profile.city}</p>
                 <div className={styles.buttonsWrapper}>
                   <button className={styles.button} onClick={() => handleEdit(profile._id)}>edit</button>
