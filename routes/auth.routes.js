@@ -8,7 +8,7 @@ const controller = require('../controllers/auth.controller');
 router.post(
   '/register',
   [
-    check('username', 'Incorrect email').notEmpty(),
+    check('username', 'Incorrect username').notEmpty(),
     check('email', 'Incorrect email').isEmail(),
     check('password', 'Minimum password length 6 characters')
       .isLength({ min: 6 })

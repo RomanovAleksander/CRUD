@@ -23,10 +23,28 @@ const ModalForm = ({
                      loadState, setUsername
 }) => {
   const auth = useContext(AuthContext);
-  const {request} = useHttp();
+  const {request, error, clearError} = useHttp();
   const [formData, setFormData] = useState();
 
   const userId = useParams().id;
+
+  const showToast = (message, type) => {
+    toast[`${type}`](message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark"
+    });
+  }
+
+  useEffect(() => {
+    showToast(error, 'error');
+    clearError();
+  }, [error, clearError])
 
   useEffect(() => {
     if (!isUser) {
@@ -44,19 +62,6 @@ const ModalForm = ({
       setFormData(user)
     }
   }, [profile, user, isUser])
-
-  const showToast = (message, type) => {
-    toast[`${type}`](message, {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark"
-    });
-  }
 
   const handleChange = (event) => {
     const isTrue = (value) => {
@@ -110,6 +115,7 @@ const ModalForm = ({
           toggleForm();
         }
       } else {
+        console.log(formData)
         const data = await request('/api/user/update', 'POST', {user: {...formData}, id: userId}, {
           Authorization: `Bearer ${auth.token}`
         });
@@ -127,9 +133,7 @@ const ModalForm = ({
         setUser(formData);
         toggleForm();
       }
-    } catch (e) {
-      console.log(e.message)
-    }
+    } catch (e) {}
   }
 
   return (
