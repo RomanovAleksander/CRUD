@@ -104,15 +104,17 @@ const ModalForm = ({ createProfile, updateProfile,
         const data = await request('/api/user/update', 'POST', {user: {...formData}, id: userId}, {
           Authorization: `Bearer ${auth.token}`
         });
-        if (data.user._id === userId && data.user.isAdmin !== user.isAdmin) {
+        console.log(data, {user: {...formData}, id: userId})
+        if (data.user._id === auth.userId && data.user.isAdmin !== formData.isAdmin) {
           loadState();
           await changeToken(data.user);
           toggleForm();
           return;
         }
+        const isTrue = (formData.isAdmin === 'true');
         showToast(data.message, 'success');
-        updateUser(data.user);
-        setUser(data.user);
+        updateUser({...formData, isAdmin: isTrue});
+        setUser({...formData, isAdmin: isTrue});
         toggleForm();
       }
     } catch (e) {
@@ -151,12 +153,12 @@ const ModalForm = ({ createProfile, updateProfile,
               <div className={styles.radioWrapper}>
                 <label>
                   <input id="user" type="radio" onChange={handleChange}
-                         name="isAdmin" value="false" required/>
+                         name="isAdmin" value={false} required/>
                   <span>user</span>
                 </label>
                 <label>
                   <input id="admin" type="radio" onChange={handleChange}
-                         name="isAdmin" value="true" required/>
+                         name="isAdmin" value={true} required/>
                   admin
                 </label>
               </div>

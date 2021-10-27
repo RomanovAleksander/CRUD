@@ -22,8 +22,8 @@ class userController {
 
   async updateUser(req, res) {
     try {
-      await User.findByIdAndUpdate(req.body.id, {...req.body.user});
-      res.status(201).json({ message: 'Profile updated', user: req.body.user });
+      const user = await User.findByIdAndUpdate(req.body.id, {...req.body.user});
+      res.status(201).json({ message: 'Profile updated', user: user });
     } catch (e) {
       res.status(500).json({ message: 'Something went wrong, try one more time' });
     }
