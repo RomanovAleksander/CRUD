@@ -1,5 +1,6 @@
 {
   "port": 5000,
   "jwtSecret": "romanov_oleksandr_crud",
-  "mongoUri": "mongodb+srv://romanov:1234romanov@cluster0.hxsmz.mongodb.net/app?retryWrites=true&w=majority"
+  "mongoUri": "mongodb+srv://romanov:1234romanov@cluster0.hxsmz.mongodb.net/app?retryWrites=true&w=majority",
+  "NODE_ENV": "production"
 }
