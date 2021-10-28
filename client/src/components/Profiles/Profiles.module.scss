@@ -1,3 +1,11 @@
+@import '../../styles/variables';
+
+%flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .container {
   position: relative;
   width: 100%;
@@ -28,10 +36,8 @@
 }
 
 .profile {
-  display: flex;
-  flex-direction: column;
+  @extend %flex-col-center;
   justify-content: flex-start;
-  align-items: center;
   border: 1px solid #D6D8E7;
   border-radius: 16px;
   background: #FFFFFF;
@@ -54,7 +60,7 @@
     font-size: 24px;
     line-height: 36px;
     letter-spacing: 0.75px;
-    color: #4E4B66;
+    color: $secondary-color;
     padding-top: 15px;
   }
 
@@ -67,7 +73,7 @@
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    border: 2px solid #4E4B66;
+    border: 2px solid $secondary-color;
     box-sizing: border-box;
     margin-top: 49px;
   }
@@ -75,6 +81,7 @@
 
 .pointer {
   cursor: pointer;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .buttonsWrapper {
@@ -104,7 +111,7 @@
   }
 
   .edit:hover {
-    background: #624AF2;
+    background: $hover-edit-color;
     border-bottom-left-radius: 16px;
     color: white;
 
@@ -114,7 +121,7 @@
   }
 
   .delete:hover {
-    background: #EB0055;
+    background: $hover-delete-color;
     border-bottom-right-radius: 16px;
     color: white;
 

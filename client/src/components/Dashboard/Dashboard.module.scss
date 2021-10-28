@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .container {
   position: relative;
   width: 100%;
@@ -15,7 +17,7 @@
 }
 
 .pageTitle {
-  color: #14142B;
+  color: $primary-color;
   font-size: 36px;
   margin-bottom: 60px;
 }
