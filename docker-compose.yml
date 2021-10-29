@@ -1,0 +1,12 @@
+version: "3"
+services:
+  crud-app:
+    stdin_open: true
+    image: oleksandrromanov/crud-image
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/usr/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - NODE_ENV=production
