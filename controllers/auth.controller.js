@@ -70,7 +70,7 @@ class authController {
 
       const token = generateAccessToken(user._id, user.isAdmin);
 
-      res.json({ token, userId: user.id, isAdmin: user.isAdmin });
+      res.status(201).json({ token, userId: user.id, isAdmin: user.isAdmin });
     } catch (e) {
       res.status(400).json({ message: 'Login error' });
     }
@@ -82,7 +82,7 @@ class authController {
       const user = await User.findOne({ email });
       const token = generateAccessToken(user._id, user.isAdmin);
 
-      res.json({ token, userId: user.id, isAdmin: user.isAdmin });
+      res.status(201).json({ token, userId: user.id, isAdmin: user.isAdmin });
     } catch (e) {
       res.status(400).json({ message: 'Error' });
     }
@@ -103,7 +103,7 @@ class authController {
       return res.status(401).json({ message: 'No authorization' })
     }
 
-    res.json({decoded: decoded, username: user.username});
+    res.status(201).json({decoded: decoded, username: user.username});
   } catch (e) {
     res.status(401).json({ message: 'No authorization' });
   }

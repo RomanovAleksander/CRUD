@@ -27,15 +27,16 @@ async function start() {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
-    app.listen(PORT, () => console.log(`App has been started on ${PORT}...`));
   } catch (e) {
     console.log('Server Error', e.message);
     process.exit(1);
   }
 }
 
+start();
+
 if (process.env.NODE_ENV !== 'test') {
-  start();
+  app.listen(PORT, () => console.log(`App has been started on ${PORT}...`));
 }
 
 module.exports = app;
