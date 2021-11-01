@@ -29,7 +29,14 @@ describe('Auth Endpoints', () => {
     expect(res.statusCode).toEqual(201);
   });
 
-  it('should fail registration', async () => {
+  it('should fail registration because credentials are incorrect', async () => {
+    const res = await request(app)
+      .post('/api/auth/register')
+      .send({ ...userData, email: 'email'})
+    expect(res.statusCode).toEqual(400);
+  });
+
+  it('should fail registration because user already exists', async () => {
     const res = await request(app)
       .post('/api/auth/register')
       .send(userData)
