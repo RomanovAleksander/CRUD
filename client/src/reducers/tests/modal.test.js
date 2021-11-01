@@ -3,13 +3,20 @@ import {
 } from '../../actions/modal/actions';
 import {modal} from '../modal';
 
-test('form should be toggled', () => {
-  let action = toggleForm();
-  let state = {
+describe('Modal Reducer', () => {
+  const initialState = {
     isOpen: false
   };
 
-  let newState = modal(state, action);
+  test('should return the initial state', () => {
+    expect(modal(undefined, {})).toEqual(initialState);
+  });
 
-  expect(newState.isOpen).toBe(!state.isOpen)
+  test('form should be toggled', () => {
+    expect(modal(undefined, toggleForm()))
+      .toEqual({
+        ...initialState,
+        isOpen: !initialState.isOpen
+      });
+  });
 });

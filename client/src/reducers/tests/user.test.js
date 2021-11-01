@@ -20,7 +20,7 @@ describe('User Reducer', () => {
 
   test('should return the initial state', () => {
     expect(user(undefined, {})).toEqual(initialState);
-  })
+  });
 
   test('user should be added', () => {
     expect(user(undefined, setUser(userData)))

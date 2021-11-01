@@ -53,17 +53,19 @@ describe('User Reducer', () => {
   });
 
   test('profile should be updated', () => {
+    initialState.profiles.push(profileData);
     const updatedProfiles = initialState.profiles.map(profile => {
-      return profile._id === profileData.id ? {
+      return profile.id === profileData.id ? {
         ...profileData
       } : profile
     });
 
-    expect(profiles(undefined, updateProfile(profileData)))
+    expect(profiles(initialState, updateProfile({...profileData, name: 'tested', _id: profileData.id})))
       .toEqual({...initialState, profiles: updatedProfiles, profile: null});
   });
 
   test('profile data should be cleared', () => {
+    initialState.profiles.pop();
     expect(profiles(undefined, clearProfileData()))
       .toEqual({...initialState, profile: null});
   });
