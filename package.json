@@ -22,6 +22,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "config": "^3.3.6",
+    "enzyme": "^3.11.0",
     "express": "^4.17.1",
     "express-validator": "^6.13.0",
     "jsonwebtoken": "^8.5.1",
@@ -35,7 +36,9 @@
     "supertest": "^6.1.6"
   },
   "jest": {
-    "modulePathIgnorePatterns": ["<rootDir>/client/"],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/client/"
+    ],
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
       "/node_modules/"

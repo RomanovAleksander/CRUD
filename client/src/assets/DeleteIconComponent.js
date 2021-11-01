@@ -7,6 +7,7 @@ export const DeleteIconComponent = (props) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <title>Delete</title>
       <path
         d="M4.059 14.65L3.55 4.5H16.45l-.508 10.15a3 3 0 01-2.996 2.85h-5.89a3 3 0 01-2.996-2.85zM7.25 4h5.5v-.5a2 2 0 00-2-2h-1.5a2 2 0 00-2 2V4z"
         stroke="#4E4B66"
