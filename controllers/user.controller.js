@@ -10,7 +10,7 @@ class userController {
   async getUsers(req, res) {
     try {
       const users = await User.find();
-      res.json(users);
+      res.status(201).json(users);
     } catch (e) {
       res.status(500).json({ message: 'Something went wrong, try one more time'});
     }
@@ -19,7 +19,7 @@ class userController {
   async getUser(req, res) {
     try {
       const user = await User.findOne({ _id: req.params.id });
-      res.json(user);
+      res.status(201).json(user);
     } catch (e) {
       res.status(500).json({ message: 'Something went wrong, try one more time'});
     }
