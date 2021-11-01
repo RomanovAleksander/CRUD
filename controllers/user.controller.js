@@ -58,7 +58,10 @@ class userController {
   async deleteUser(req, res) {
     try {
       const user = await User.findByIdAndDelete(req.body.userId);
-      await Profile.find({ owner: req.body.userId })
+      const profiles = await Profile.find({ owner: req.body.userId });
+      if (profiles) {
+        await Profile.deleteMany({ owner: req.body.userId });
+      }
       res.status(201).json({ message: 'User deleted', id: user._id });
     } catch (e) {
       res.status(500).json({ message: 'Something went wrong, try one more time' });

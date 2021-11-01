@@ -54,7 +54,7 @@ class profileController {
   async getProfiles(req, res) {
     try {
       const profiles = await Profile.find();
-      res.json({profiles, adults: getAdultsCount(profiles)});
+      res.status(201).json({profiles, adults: getAdultsCount(profiles)});
     } catch (e) {
       res.status(500).json({ message: 'Something went wrong, try one more time'});
     }
@@ -63,7 +63,7 @@ class profileController {
   async getProfilesByUser(req, res) {
     try {
       const profiles = await Profile.find({ owner: req.User.userId });
-      res.json(profiles);
+      res.status(201).json(profiles);
     } catch (e) {
       res.status(500).json({message: 'Something went wrong, try one more time'});
     }
@@ -72,7 +72,7 @@ class profileController {
   async getProfilesByUserId(req, res) {
     try {
       const profile = await Profile.find({ owner: req.params.id });
-      res.json(profile);
+      res.status(201).json(profile);
     } catch (e) {
       res.status(500).json({ message: 'Something went wrong, try one more time'});
     }

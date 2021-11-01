@@ -1,11 +1,17 @@
 const request = require('supertest');
 const app = require('../app');
-let id, token;
+let id, token, profileId;
 const userData = {
   username: 'test',
   email: 'test@gmail.com',
   password: '123123',
   isAdmin: true
+};
+const profileDate = {
+  name: 'test',
+  gender: 'male',
+  birthdate: '1999-12-20',
+  city: 'Kyiv'
 };
 
 afterAll(async () => {
@@ -90,6 +96,63 @@ describe('Auth Endpoints', () => {
       .set('Authorization', `Bearer ${token}test`);
     expect(res.statusCode).toEqual(401);
     expect(res.body).toHaveProperty('message');
+  });
+});
+
+describe('Profile Endpoints', () => {
+  it('should create a new profile', async () => {
+    const res = await request(app)
+      .post('/api/profile/create')
+      .send({ ...profileDate,  userId: id })
+      .set('Authorization', `Bearer ${token}`);
+    profileId = res.body.profile._id;
+    expect(res.statusCode).toEqual(201);
+    expect(res.body.profile).toHaveProperty('name');
+  });
+
+  it('should fail creating a new profile', async () => {
+    const res = await request(app)
+      .post('/api/profile/create')
+      .send({ ...profileDate,  userId: id })
+      .set('Authorization', `Bearer ${token}token`);
+    expect(res.statusCode).toEqual(401);
+  });
+
+  it('should update a profile', async () => {
+    const res = await request(app)
+      .post('/api/profile/update')
+      .send({ ...profileDate, name: 'tested', _id: profileId})
+      .set('Authorization', `Bearer ${token}`);
+    expect(res.statusCode).toEqual(201);
+  });
+
+  it('should delete a profile', async () => {
+    const res = await request(app)
+      .delete('/api/profile/delete')
+      .send({ id: profileId })
+      .set('Authorization', `Bearer ${token}`);
+    expect(res.statusCode).toEqual(201);
+  });
+
+  it('should fetch all profiles', async () => {
+    const res = await request(app)
+      .get('/api/profile/all')
+      .set('Authorization', `Bearer ${token}`);
+    expect(res.statusCode).toEqual(201);
+  });
+
+  it('should fetch profiles by user', async () => {
+    const res = await request(app)
+      .get('/api/profile/')
+      .set('Authorization', `Bearer ${token}`);
+    expect(res.statusCode).toEqual(201);
+  });
+
+  it('should fetch profiles by user id', async () => {
+    const res = await request(app)
+      .get(`/api/profile/${id}`)
+      .set('Authorization', `Bearer ${token}`);
+    expect(res.statusCode).toEqual(201);
   });
 });
 
