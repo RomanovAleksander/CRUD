@@ -18,36 +18,36 @@ describe('User Reducer', () => {
     isAdmin: true
   };
 
-  test('should return the initial state', () => {
+  it('should return the initial state', () => {
     expect(user(undefined, {})).toEqual(initialState);
   });
 
-  test('user should be added', () => {
+  it('user should be added', () => {
     expect(user(undefined, setUser(userData)))
       .toEqual({...initialState, user: userData});
   });
 
-  test('username should be added', () => {
+  it('username should be added', () => {
     expect(user(undefined, setUsername(userData.username)))
       .toEqual({...initialState, username: userData.username});
   });
 
-  test('isUser value should be changed', () => {
+  it('isUser value should be changed', () => {
     expect(user(undefined, changeUser()))
       .toEqual({...initialState, isUser: true});
   });
 
-  test('user should be updated', () => {
+  it('user should be updated', () => {
     expect(user(undefined, updateUser(userData)))
       .toEqual({...initialState, user:userData, isUser: false});
   });
 
-  test('user data should be cleared', () => {
+  it('user data should be cleared', () => {
     expect(user(undefined, clearUserData()))
       .toEqual({...initialState});
   });
 
-  test('loadingState should be changed', () => {
+  it('loadingState should be changed', () => {
     expect(user(undefined, loadState()))
       .toEqual({...initialState, loadingState: !initialState.loadingState});
   });

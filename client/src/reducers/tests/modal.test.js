@@ -8,11 +8,11 @@ describe('Modal Reducer', () => {
     isOpen: false
   };
 
-  test('should return the initial state', () => {
+  it('should return the initial state', () => {
     expect(modal(undefined, {})).toEqual(initialState);
   });
 
-  test('form should be toggled', () => {
+  it('form should be toggled', () => {
     expect(modal(undefined, toggleForm()))
       .toEqual({
         ...initialState,
