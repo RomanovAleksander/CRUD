@@ -2,7 +2,6 @@ import {
   changeProfile, clearProfileData,
   createProfile, deleteProfile,
   setProfiles, updateProfile
-
 } from '../../actions/profiles/actions';
 import {profiles} from '../profiles';
 
