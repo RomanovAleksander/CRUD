@@ -26,7 +26,7 @@ const Header = ({ username }) => {
               style={{
           backgroundImage: `url(${auth.isAdmin ? adminAvatar : userAvatar})`
         }} />
-        <span>{username}</span>
+        <span data-testid="user-username">{username}</span>
       </div>
       <div className={styles.wrapper}>
         { auth.isAdmin && (
@@ -51,7 +51,7 @@ const Header = ({ username }) => {
             </div>
           </nav>
         )}
-        <div className={styles.logout}>
+        <div className={styles.logout} data-testid="logout-btn">
           <a href="/" onClick={logoutHandler}>Log Out</a>
         </div>
       </div>

@@ -7,7 +7,7 @@ const LoginForm =  ({ isSignIn, userData,
                       handleCheck, handleChange
                     }) => {
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-testid="login-form">
       <ToastContainer />
       <div className={styles.title}>
         {isSignIn ? 'Sign in' : 'Create your account'}
@@ -21,6 +21,7 @@ const LoginForm =  ({ isSignIn, userData,
                    onChange={handleChange}
                    value={userData.username}
                    minLength="1"
+                   data-testid="username-input"
                    required
             />
           </label>
@@ -31,6 +32,7 @@ const LoginForm =  ({ isSignIn, userData,
                  name="email"
                  onChange={handleChange}
                  value={userData.email}
+                 data-testid="email-input"
                  required
           />
         </label>
@@ -41,6 +43,7 @@ const LoginForm =  ({ isSignIn, userData,
                  onChange={handleChange}
                  value={userData.password}
                  minLength="6"
+                 data-testid="password-input"
                  required
           />
         </label>
@@ -57,6 +60,7 @@ const LoginForm =  ({ isSignIn, userData,
           <button className={styles.submitButton}
                   type="submit"
                   disabled={loading}
+                  data-testid="submit-button"
           >
             {isSignIn ? 'Sign In' : 'Sign Up'}
           </button>
