@@ -1,6 +1,9 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
+import userEvent from "@testing-library/user-event";
 import { AuthPage } from '../AuthPage';
+import {Router} from "react-router-dom";
+import {createMemoryHistory} from "history";
 // import { useHttp } from '../../hooks/http.hook';
 // import LoginForm from '../../components/LoginForm/LoginForm';
 
@@ -12,11 +15,28 @@ import { AuthPage } from '../AuthPage';
 //   LoginForm: jest.fn()
 // }));
 
+const data = {
+  token: "",
+  user: {
+    _id: "615559cf21d8c861693cf3f4",
+    username: "test",
+    email: "test@gmail.com",
+    type: "user",
+    password: "123123",
+  },
+};
+
 describe('AuthPage', () => {
-  // beforeEach(() => {
-  //   useHttp.getMockImplementation(() => ({}));
-  //   LoginForm.mockImplementation(() => null);
-  // });
+  let originFetch;
+  const history = createMemoryHistory();
+
+  beforeEach(() => {
+    originFetch = global.fetch;
+  });
+
+  afterEach(() => {
+    global.fetch = originFetch;
+  });
 
   it('renders correctly', () => {
     const {queryByTestId} = render(<AuthPage />);
@@ -30,6 +50,61 @@ describe('AuthPage', () => {
     fireEvent.change(emailInput, {target: {value: 'test'}});
     expect(emailInput.value).toBe('test');
   });
+
+  it("should push user data to API / sign up", async () => {
+    const fakeResponse = data;
+    const mRes = { json: jest.fn().mockResolvedValueOnce(fakeResponse) };
+    const mockedFetch = jest.fn().mockResolvedValueOnce(mRes);
+    global.fetch = mockedFetch;
+
+    const { getByTestId } = render(
+      <Router history={history}>
+        <AuthPage isSignIn={false}/>
+      </Router>
+    );
+    const username = getByTestId("username-input");
+    const email = getByTestId("email-input");
+    const password = getByTestId("password-input");
+
+    userEvent.type(username, data.username);
+    userEvent.type(email, data.email);
+    userEvent.type(password, data.password);
+    userEvent.click(getByTestId("submit-button"));
+
+    expect(getByTestId("username-input")).toHaveValue(data.username);
+    expect(getByTestId("email-input")).toHaveValue(data.email);
+    expect(getByTestId("password-input")).toHaveValue(data.password);
+    await waitFor(() => {
+      expect(history.location.pathname).toBe("/");
+    });
+  });
+
+  it("should fetch data from API / sign in", async () => {
+    const fakeResponse = data;
+    const mRes = { json: jest.fn().mockResolvedValueOnce(fakeResponse) };
+    const mockedFetch = jest.fn().mockResolvedValueOnce(mRes);
+    global.fetch = mockedFetch;
+
+    const { getByTestId } = render(
+      <Router history={history}>
+        <AuthPage isSignIn={true}/>
+      </Router>
+    );
+
+    const email = getByTestId("email-input");
+    const password = getByTestId("password-input");
+
+    userEvent.type(email, data.email);
+    userEvent.type(password, data.password);
+    userEvent.click(getByTestId("submit-button"));
+
+    expect(getByTestId("email-input")).toHaveValue(data.email);
+    expect(getByTestId("password-input")).toHaveValue(data.password);
+    await waitFor(() => {
+      expect(history.location.pathname).toBe("/");
+    });
+  });
+
 
   // describe('without SignIn', () => {
   //   it('renders the from for sign up', () => {

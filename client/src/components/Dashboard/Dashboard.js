@@ -2,7 +2,7 @@ import styles from './Dashboard.module.scss';
 
 const Dashboard = ({ users, profiles }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid="dashboard">
       <div className={styles.wrapper}>
         <div className={styles.pageTitle}>Dashboard:</div>
         <div className={styles.dashboard}>

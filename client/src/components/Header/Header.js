@@ -32,19 +32,19 @@ const Header = ({ username }) => {
         { auth.isAdmin && (
           <nav className={styles.menu}>
             <div className={styles.button}>
-              <NavLink to="/profiles">
+              <NavLink to="/profiles" data-testid="toProfiles">
                 Profiles
                 <img src={profiles} alt="profiles logo"/>
               </NavLink>
             </div>
             <div className={styles.button}>
-              <NavLink to="/dashboard">
+              <NavLink to="/dashboard" data-testid="toDashboard">
                 Dashboard
                 <img src={dashboard} alt="dashboard logo"/>
               </NavLink>
             </div>
             <div className={styles.button}>
-              <NavLink to="/users">
+              <NavLink to="/users" data-testid="toUsers">
                 Users
                 <img src={users} alt="users logo"/>
               </NavLink>

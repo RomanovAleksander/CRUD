@@ -1,16 +1,9 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import Header from './Header';
 import { Router } from 'react-router-dom';
-// import renderer from 'react-test-renderer';
-
 import React from 'react';
 import { Provider } from 'react-redux';
-import renderer from 'react-test-renderer';
 import configureStore from 'redux-mock-store';
-import MyConnectedComponent from './Header';
+import Header from './Header';
 import {render, fireEvent} from "@testing-library/react";
-import {AuthPage} from "../../pages/AuthPage";
 import {AuthContext} from "../../context/AuthContext";
 import { createMemoryHistory } from 'history'
 
@@ -33,7 +26,7 @@ describe('Header', () => {
       <Router history={history}>
         <AuthContext.Provider value={{ logout: logout(), isAdmin: true } }>
           <Provider store={store}>
-            <MyConnectedComponent/>
+            <Header/>
           </Provider>
         </AuthContext.Provider>
       </Router>
@@ -52,5 +45,16 @@ describe('Header', () => {
     fireEvent.click(button);
     expect(logout).toHaveBeenCalledTimes(1);
     expect(history.location.pathname).toBe('/');
+  });
+
+  it("should navigate to pages", () => {
+    fireEvent.click(component.getByTestId("toProfiles"));
+    expect(history.location.pathname).toBe("/profiles");
+
+    fireEvent.click(component.getByTestId("toDashboard"));
+    expect(history.location.pathname).toBe("/dashboard");
+
+    fireEvent.click(component.getByTestId("toUsers"));
+    expect(history.location.pathname).toBe("/users");
   });
 });

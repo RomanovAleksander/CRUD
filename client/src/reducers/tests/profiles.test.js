@@ -63,6 +63,11 @@ describe('User Reducer', () => {
       .toEqual({...initialState, profiles: updatedProfiles, profile: null});
   });
 
+  it('profile should not be updated', () => {
+    expect(profiles(initialState, updateProfile({...profileData, name: 'tested', _id: `${profileData.id}1ds23`})))
+      .toEqual({...initialState, profiles: initialState.profiles, profile: null});
+  });
+
   it('profile data should be cleared', () => {
     initialState.profiles.pop();
     expect(profiles(undefined, clearProfileData()))

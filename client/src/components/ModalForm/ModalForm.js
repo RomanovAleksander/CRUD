@@ -129,7 +129,7 @@ const ModalForm = ({ createProfile, updateProfile,
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-testid="modal-form">
       <ToastContainer />
       <div className={styles.modal}>
         {isUser && formData && (
