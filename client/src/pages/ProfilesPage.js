@@ -6,7 +6,7 @@ const ProfilesPage = ({ isOpen }) => {
   return (
     <>
       { isOpen && <ModalForm /> }
-      <Profiles />
+      {/*<Profiles />*/}
     </>
   )
 }

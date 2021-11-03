@@ -66,14 +66,14 @@ describe('AuthPage', () => {
     const email = getByTestId("email-input");
     const password = getByTestId("password-input");
 
-    userEvent.type(username, data.username);
-    userEvent.type(email, data.email);
-    userEvent.type(password, data.password);
+    userEvent.type(username, data.user.username);
+    userEvent.type(email, data.user.email);
+    userEvent.type(password, data.user.password);
     userEvent.click(getByTestId("submit-button"));
 
-    expect(getByTestId("username-input")).toHaveValue(data.username);
-    expect(getByTestId("email-input")).toHaveValue(data.email);
-    expect(getByTestId("password-input")).toHaveValue(data.password);
+    expect(username.value).toBe(data.user.username);
+    expect(email.value).toBe(data.user.email);
+    expect(password.value).toBe(data.user.password);
     await waitFor(() => {
       expect(history.location.pathname).toBe("/");
     });
@@ -94,12 +94,12 @@ describe('AuthPage', () => {
     const email = getByTestId("email-input");
     const password = getByTestId("password-input");
 
-    userEvent.type(email, data.email);
-    userEvent.type(password, data.password);
+    userEvent.type(email, data.user.email);
+    userEvent.type(password, data.user.password);
     userEvent.click(getByTestId("submit-button"));
 
-    expect(getByTestId("email-input")).toHaveValue(data.email);
-    expect(getByTestId("password-input")).toHaveValue(data.password);
+    expect(email).toHaveValue(data.user.email);
+    expect(password).toHaveValue(data.user.password);
     await waitFor(() => {
       expect(history.location.pathname).toBe("/");
     });

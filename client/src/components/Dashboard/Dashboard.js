@@ -8,7 +8,7 @@ const Dashboard = ({ users, profiles }) => {
         <div className={styles.dashboard}>
           <div className={styles.dashboardItem}>
             <p className={styles.title}>Users:</p>
-            <p className={styles.count}>{users.length}</p>
+            <p className={styles.count} data-testid="users-length">{users.length}</p>
           </div>
           <div className={styles.dashboardItem}>
             <p className={styles.title}>Profiles:</p>

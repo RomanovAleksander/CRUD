@@ -1,7 +1,7 @@
 import React from 'react';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
-import ProfilesPage from '../ProfilesPage';
+import UserDetailPage from '../UserDetailPage';
 import {render, fireEvent} from "@testing-library/react";
 import {AuthContext} from "../../context/AuthContext";
 import {BrowserRouter as Router} from "react-router-dom";
@@ -19,11 +19,12 @@ describe('Header', () => {
         isOpen: isOpen
       },
       profiles: {
+        profiles: [],
         profile: null,
         isCreate: true
       },
       user: {
-        user: null
+        usUser: false
       }
     });
 
@@ -32,12 +33,12 @@ describe('Header', () => {
       <Router>
         <AuthContext.Provider value={{}}>
           <Provider store={store}>
-            <ProfilesPage/>
+            <UserDetailPage/>
           </Provider>
         </AuthContext.Provider>
       </Router>
     );
-    });
+  });
 
   it('should not render modal form', () => {
     const modal = component.queryByTestId('modal-form');

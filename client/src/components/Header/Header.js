@@ -25,7 +25,8 @@ const Header = ({ username }) => {
         <span className={`${styles.avatar} ${auth.isAdmin ? styles.admin : styles.user}`}
               style={{
           backgroundImage: `url(${auth.isAdmin ? adminAvatar : userAvatar})`
-        }} />
+        }} data-testid="avatar"
+        />
         <span data-testid="user-username">{username}</span>
       </div>
       <div className={styles.wrapper}>
@@ -51,8 +52,8 @@ const Header = ({ username }) => {
             </div>
           </nav>
         )}
-        <div className={styles.logout} data-testid="logout-btn">
-          <a href="/" onClick={logoutHandler}>Log Out</a>
+        <div className={styles.logout}>
+          <a href="/" onClick={logoutHandler} data-testid="logout-btn">Log Out</a>
         </div>
       </div>
     </header>

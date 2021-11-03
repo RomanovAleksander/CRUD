@@ -36,9 +36,7 @@ const UserDetail = ({ user, setUser, changeUser, toggleForm, loadingState }) => 
         Authorization: `Bearer ${token}`
       });
       setUser(data);
-    } catch (e) {
-      console.log(e.message)
-    }
+    } catch (e) {}
   }, [request, token, userId, setUser])
 
   const fetchUserDelete = useCallback(async () => {
