@@ -84,6 +84,11 @@
   background: rgba(255, 255, 255, 0.5);
 }
 
+.pointer:hover {
+  margin-top: -2px;
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
+
 .buttonsWrapper {
   position: absolute;
   display: flex;
