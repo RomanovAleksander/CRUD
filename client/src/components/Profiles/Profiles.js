@@ -46,9 +46,7 @@ const Profiles = ({ profiles, setProfiles, deleteProfile,
         });
         setProfiles(data);
       }
-    } catch (e) {
-      console.log(e.message)
-    }
+    } catch (e) {}
   }, [token, request, setProfiles, userId])
 
   const fetchProfileDelete = useCallback(async (id) => {

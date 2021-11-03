@@ -7,6 +7,13 @@ import {AuthContext} from "../../context/AuthContext";
 import {BrowserRouter as Router} from "react-router-dom";
 
 const mockStore = configureStore([]);
+const fakeData = {
+  _id: '617c0b1507d9aa367606e805',
+  email: "email@gmail.com",
+  username: "username",
+  profiles: [],
+  isAdmin: false
+};
 
 describe('Header', () => {
   let store;
@@ -24,7 +31,9 @@ describe('Header', () => {
         isCreate: true
       },
       user: {
-        usUser: false
+        isUser: false,
+        user: fakeData,
+        loadingState: false
       }
     });
 
@@ -49,5 +58,9 @@ describe('Header', () => {
   it('should render modal form', () => {
     const modal = component.queryByTestId('modal-form');
     expect(modal).toBeInTheDocument();
+    isOpen = false;
   });
+  // it('modal form should be opened', () => {
+  //   console.log(component.getByTestId('user-detail'))
+  // });
 });

@@ -104,22 +104,4 @@ describe('AuthPage', () => {
       expect(history.location.pathname).toBe("/");
     });
   });
-
-
-  // describe('without SignIn', () => {
-  //   it('renders the from for sign up', () => {
-  //     const {queryByTestId} = render(<AuthPage isSignIn={false}/>);
-  //     expect(queryByTestId('username-input')).toBeTruthy();
-  //     expect(LoginForm).toBeCalledWith(
-  //       expect.objectContaining({
-  //         defaultValues: { isSignIn: false }
-  //       }),
-  //       {}
-  //     )
-  //   });
-  //
-  //   describe('on form submit', () => {
-  //     it.todo('makes request and navigates to the root page')
-  //   });
-  // });
 });

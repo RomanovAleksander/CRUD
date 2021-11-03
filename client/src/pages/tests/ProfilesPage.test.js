@@ -8,7 +8,7 @@ import {BrowserRouter as Router} from "react-router-dom";
 
 const mockStore = configureStore([]);
 
-describe('Header', () => {
+describe('Profiles Page', () => {
   let store;
   let component;
   let isOpen = false;
@@ -19,6 +19,14 @@ describe('Header', () => {
         isOpen: isOpen
       },
       profiles: {
+        profiles: [{
+          _id: "617fb26a35068083bd343f3r",
+          name: "profile",
+          gender: "male",
+          birthdate: "1999-12-20",
+          city: "Kyiv",
+          owner: "617c0b1507d9aa367606e805"
+        }],
         profile: null,
         isCreate: true
       },

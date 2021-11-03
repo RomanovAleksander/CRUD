@@ -1,61 +1,61 @@
-// import React from 'react';
-// import UserDetail from './UserDetail';
-// import { render, waitFor, act } from '@testing-library/react';
-// import { Router } from "react-router-dom";
-// import {AuthContext} from "../../context/AuthContext";
-// import {Provider, useDispatch, useSelector} from "react-redux";
-// import {createMemoryHistory} from "history";
-// import configureStore from "redux-mock-store";
-// import {setUser} from "../../actions/users/actions";
-//
-// const mockStore = {
-//   user: {
-//     user: fakeData,
-//     loadingState: false
-//   },
-// };
-//
-// jest.mock('react-redux', () => ({
-//   useSelector: jest.fn(),
-//     useDispatch: jest.fn()
-// }));
-//
-// const fakeData = {
-//   _id: '617c0b1507d9aa367606e805',
-//   email: "email@gmail.com",
-//   username: "username",
-//   profiles: [],
-//   isAdmin: false
-// };
-//
-// describe('UserDetail', () => {
-//   const history = createMemoryHistory();
-//
-//   beforeEach(() => {
-//     jest.spyOn(global, 'fetch').mockResolvedValue({
-//         json: jest.fn().mockResolvedValue(fakeData)
-//     });
-//   });
-//
-//   afterEach(() => {
-//     jest.restoreAllMocks();
-//   });
-//
-//   it('renders userDetail',() => {
-//
-//     const {getByText} = render(
-//
-//               <UserDetail/>
-//
-//       );
-//
-//
-//      waitFor(() => {
-//        screen.debug
-//        expect(getByText(fakeData.username)).toBeInTheDocument();
-//        // expect(container.getByText(fakeData.email)).toBeInTheDocument();
-//        // expect(container.getByText('admin')).toBeInTheDocument();
-//        // expect(setUser).toBeCalled();
-//      })
-//   });
-// });
+import React from 'react';
+import UserDetail from './UserDetail';
+import {fireEvent, render, waitFor} from '@testing-library/react';
+import { BrowserRouter as Router } from "react-router-dom";
+import {AuthContext} from "../../context/AuthContext";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
+
+const mockStore = configureStore([]);
+const fakeData = {
+  _id: '617c0b1507d9aa367606e805',
+  email: "email@gmail.com",
+  username: "username",
+  profiles: [],
+  isAdmin: false
+};
+
+describe('UserDetail', () => {
+  let store;
+  const logout = jest.fn();
+
+  beforeEach(() => {
+    store = mockStore({
+      user: {
+        user: fakeData,
+        loadingState: false
+      },
+    });
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+        json: jest.fn().mockResolvedValue(fakeData)
+    });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('renders userDetail',async () => {
+    const setState = jest.fn();
+    const useStateSpy = jest.spyOn(React, 'useState')
+    useStateSpy.mockImplementation((init) => [init, setState]);
+
+    const {getByText} = render(
+      <Router>
+        <AuthContext.Provider value={{token: "", logout}}>
+          <Provider store={store}>
+            <UserDetail/>
+          </Provider>
+        </AuthContext.Provider>
+      </Router>
+    );
+
+
+     await waitFor(() => {
+       expect(getByText(fakeData.username)).toBeInTheDocument();
+       expect(getByText(fakeData.email)).toBeInTheDocument();
+       expect(getByText('user')).toBeInTheDocument();
+       expect(setState).toBeCalled();
+     })
+  });
+});

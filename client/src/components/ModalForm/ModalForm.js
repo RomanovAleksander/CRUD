@@ -184,6 +184,7 @@ const ModalForm = ({ createProfile, updateProfile,
                        type="text"
                        value={formData.name || ''}
                        onChange={handleChange}
+                       data-testid="profile-name"
                 />
               </label>
             </div>
@@ -215,6 +216,7 @@ const ModalForm = ({ createProfile, updateProfile,
                        value={formData.birthdate || ''}
                        max={new Date().toISOString().slice(0, -14)}
                        onChange={handleChange}
+                       data-testid="profile-birthdate"
                 />
               </label>
             </div>
@@ -225,6 +227,7 @@ const ModalForm = ({ createProfile, updateProfile,
                        type="text"
                        value={formData.city || ''}
                        onChange={handleChange}
+                       data-testid="profile-city"
                 />
               </label>
             </div>
@@ -238,6 +241,7 @@ const ModalForm = ({ createProfile, updateProfile,
           </button>
           <button onClick={handleClose}
                   className={styles.close}
+                  data-testid="close-btn"
           >
             <CloseIconComponent />
           </button>

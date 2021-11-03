@@ -1,5 +1,5 @@
 import React from "react";
-import {render, act, waitFor} from "@testing-library/react";
+import {render, waitFor} from "@testing-library/react";
 import {DashboardPage} from "../DashboardPage";
 import "@testing-library/jest-dom/extend-expect";
 
@@ -24,7 +24,7 @@ const data = {
   }
 };
 
-describe("DashboardPage", async () => {
+describe("DashboardPage", () => {
   beforeEach(() => {
     jest.spyOn(global, 'fetch').mockResolvedValue({
       json: jest.fn().mockResolvedValue(data)

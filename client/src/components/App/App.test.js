@@ -7,7 +7,7 @@ import {BrowserRouter as Router} from "react-router-dom";
 import configureStore from "redux-mock-store";
 const mockStore = configureStore([]);
 
-it('should render Dashboard component', () => {
+it('should render App component', () => {
   let store = mockStore({
     user: {
       username: 'test'

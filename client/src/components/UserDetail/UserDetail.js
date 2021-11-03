@@ -67,7 +67,7 @@ const UserDetail = ({ user, setUser, changeUser, toggleForm, loadingState }) => 
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid="user-detail">
       <ToastContainer />
       {!loading && user && (
         <div className={styles.wrapper}>
@@ -77,11 +77,12 @@ const UserDetail = ({ user, setUser, changeUser, toggleForm, loadingState }) => 
           <div className={styles.buttonsWrapper}>
             <button className={`${styles.button} ${styles.edit}`}
                     onClick={handleEdit}
+                    data-testid="edit-btn"
             >
               <EditIconComponent />
             </button>
             <button className={`${styles.button} ${styles.delete}`}
-                    onClick={handleDelete}
+                    onClick={handleDelete} data-testid="delete"
             >
               <DeleteIconComponent />
             </button>
