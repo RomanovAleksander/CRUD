@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 %flex-center {
   display: flex;
   justify-content: center;
@@ -58,6 +60,11 @@
     @extend %flex-center;
     text-decoration: none;
     color: rgba(20, 20, 43, 1);
+
+    &:hover {
+      transition: all 0.2s ease;
+      color: #00BA88;
+    }
   }
 
   img {
@@ -72,5 +79,10 @@
   a {
     text-decoration: none;
     color: rgba(20, 20, 43, 1);
+
+    &:hover {
+      transition: all 0.2s ease;
+      color: $hover-delete-color;
+    }
   }
 }
