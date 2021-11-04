@@ -26,13 +26,22 @@ const data = {
 
 describe("DashboardPage", () => {
   beforeEach(() => {
-    jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: jest.fn().mockResolvedValue(data)
-    });
+    jest.spyOn(global, 'fetch')
+      .mockImplementation((url) => {
+        switch (url) {
+          case '/api/user/':
+            return Promise.resolve({ json: () => Promise.resolve(data.users) });
+          case '/api/profile/all':
+            return Promise.resolve({ json: () => Promise.resolve(data.profiles) });
+          default:
+            break
+        }
+      }
+      )
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetAllMocks();
   });
 
   it("should fetch dashboard data from API",async () => {
@@ -43,12 +52,12 @@ describe("DashboardPage", () => {
     });
   });
 
-  it("should render Dashboard", () => {
+  it("should render Dashboard",async () => {
     const {getByTestId} = render(<DashboardPage/>);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(getByTestId('dashboard')).toBeInTheDocument()
-      expect(getByTestId('users-length')).toBe(data.users.length)
+      expect(getByTestId('users-length').innerHTML).toBe(`${data.users.length}`)
     })
   });
 

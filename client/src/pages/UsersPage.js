@@ -22,7 +22,7 @@ export const UsersPage = () => {
     fetchUsers();
   }, [fetchUsers])
 
-  if (loading || !users) {
+  if (loading) {
     return <Loader />
   }
 

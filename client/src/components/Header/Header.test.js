@@ -3,7 +3,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import Header from './Header';
-import {render, fireEvent, waitFor, act} from "@testing-library/react";
+import {render, fireEvent} from "@testing-library/react";
 import {AuthContext} from "../../context/AuthContext";
 import { createMemoryHistory } from 'history'
 

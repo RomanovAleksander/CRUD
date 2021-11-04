@@ -29,9 +29,18 @@ describe('Profiles', () => {
         loadingState: false
       }
     });
-    jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: jest.fn().mockResolvedValue(fakeData)
-    });
+    jest.spyOn(global, 'fetch')
+      .mockImplementation((url) => {
+          switch (url) {
+            case '/api/profile/':
+              return Promise.resolve({ json: () => Promise.resolve(data.users) });
+            case '/api/profile/all':
+              return Promise.resolve({ json: () => Promise.resolve(data.profiles) });
+            default:
+              break
+          }
+        }
+      );
   });
 
   afterEach(() => {

@@ -1,6 +1,8 @@
 import React from 'react';
 import { UsersPage } from "../UsersPage";
-import { render, waitFor } from "@testing-library/react";
+import { render, waitFor, act } from "@testing-library/react";
+import {AuthContext} from "../../context/AuthContext";
+import {BrowserRouter as Router} from "react-router-dom";
 
 const fakeData = [{
   _id: '617c0b1507d9aa367606e805',
@@ -12,20 +14,28 @@ const fakeData = [{
 
 describe('UsersPage', () => {
   beforeEach(() => {
-    jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: jest.fn().mockResolvedValue(fakeData)
-    });
+    jest.spyOn(global, 'fetch')
+      .mockImplementation(() =>
+        Promise.resolve({ json: () => Promise.resolve(fakeData) })
+      )
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetAllMocks();
   });
 
-  it('renders users data',() => {
-    const {getByText} = render(<UsersPage />);
+  it('renders users data', async () => {
+    const {getByText} = render(
+      <Router>
+        <AuthContext.Provider value={{}}>
+          <UsersPage/>
+        </AuthContext.Provider>
+      </Router>
+    );
 
-    waitFor(() => {
-      expect(getByText(fakeData.username)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(getByText(fakeData[0].email)).toBeInTheDocument();
+      expect(getByText(fakeData[0].username)).toBeInTheDocument();
     });
   });
 
@@ -34,7 +44,13 @@ describe('UsersPage', () => {
     const useStateSpy = jest.spyOn(React, 'useState')
     useStateSpy.mockImplementation((init) => [init, setState]);
 
-    render(<UsersPage />);
+    render(
+      <Router>
+        <AuthContext.Provider value={{}}>
+          <UsersPage/>
+        </AuthContext.Provider>
+      </Router>
+    );
 
     waitFor(() => {
       expect(setState).toHaveBeenCalledWith(fakeData);

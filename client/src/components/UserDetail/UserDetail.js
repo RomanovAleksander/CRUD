@@ -16,7 +16,7 @@ const UserDetail = ({ user, setUser, changeUser, toggleForm, loadingState }) => 
   const {token} = useContext(AuthContext);
   const userId = useParams().id;
   const auth = useContext(AuthContext);
-
+  console.log(userId)
   const showToast = (message, type) => {
     toast[`${type}`](message, {
       position: "top-right",

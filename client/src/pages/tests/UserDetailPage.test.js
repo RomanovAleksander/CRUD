@@ -60,7 +60,4 @@ describe('Header', () => {
     expect(modal).toBeInTheDocument();
     isOpen = false;
   });
-  // it('modal form should be opened', () => {
-  //   console.log(component.getByTestId('user-detail'))
-  // });
 });
