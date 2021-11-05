@@ -236,6 +236,7 @@ const ModalForm = ({ createProfile, updateProfile,
         <div className={styles.buttonsWrapper}>
           <button onClick={submitHandler}
                   className={styles.check}
+                  data-testid="modal-submit"
           >
             <CheckIconComponent />
           </button>

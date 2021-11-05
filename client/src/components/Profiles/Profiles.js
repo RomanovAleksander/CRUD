@@ -99,7 +99,9 @@ const Profiles = ({ profiles, setProfiles, deleteProfile,
                   </button>
                   <span className={styles.divingLine} />
                   <button className={`${styles.button} ${styles.delete}`}
-                          onClick={() => handleDelete(profile._id)}>
+                          onClick={() => handleDelete(profile._id)}
+                          data-testid='profiles-delete'
+                  >
                     delete
                     <DeleteIconComponent />
                   </button>

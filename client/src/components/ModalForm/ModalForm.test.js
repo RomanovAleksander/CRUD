@@ -5,6 +5,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import ModalForm from "./ModalForm";
+import {AuthPage} from "../../pages/AuthPage";
 
 const mockStore = configureStore([]);
 const fakeProfile = {
@@ -36,6 +37,29 @@ describe('ModalForm', () => {
         user: fakeUser
       }
     });
+    jest.spyOn(global, 'fetch')
+      .mockImplementation((url) => {
+          switch (url) {
+            case '/api/profile/create':
+              return Promise.resolve({ json: () => Promise.resolve({
+                  profile: fakeProfile,
+                  message: 'Profile Created'
+              })});
+            case '/api/profile/update':
+              return Promise.resolve({ json: () => Promise.resolve({
+                  profile: fakeProfile,
+                  message: 'Profile Updated'
+                })});
+            case '/api/user/update':
+              return Promise.resolve({ json: () => Promise.resolve({
+                  user: fakeUser,
+                  message: 'User Updated'
+                })});
+            default:
+              break
+          }
+        }
+      );
   });
 
   it('renders profile updating modal form',async () => {
@@ -117,5 +141,49 @@ describe('ModalForm', () => {
     waitFor(() => {
       expect(modal).not.toBeInTheDocument();
     });
+  });
+
+  it('profile should be created', async () => {
+    store = mockStore({
+      profiles: {
+        profile: null,
+        isCreate: true
+      },
+      user: {
+        user: null
+      }
+    });
+
+    const component = render(
+      <Router>
+        <AuthContext.Provider value={{}}>
+          <Provider store={store}>
+            <ModalForm isUser={false}/>
+          </Provider>
+        </AuthContext.Provider>
+      </Router>
+    );
+
+    await waitFor(() => {
+      fireEvent.click(component.getByTestId('modal-submit'));
+      expect(component.getByText('Profile Created')).toBeTruthy();
+    })
+  });
+
+  it('profile should be created', async () => {
+    const component = render(
+      <Router>
+        <AuthContext.Provider value={{}}>
+          <Provider store={store}>
+            <ModalForm isUser={true}/>
+          </Provider>
+        </AuthContext.Provider>
+      </Router>
+    );
+
+    await waitFor(() => {
+      fireEvent.click(component.getByTestId('modal-submit'));
+      expect(component.getByText('User Updated')).toBeTruthy();
+    })
   });
 });

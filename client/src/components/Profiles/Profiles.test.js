@@ -1,10 +1,15 @@
 import React from 'react';
 import Profiles from './Profiles';
-import {render, waitFor, act} from '@testing-library/react';
+import {render, waitFor, act, fireEvent} from '@testing-library/react';
 import { BrowserRouter as Router } from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
+
+import { renderWithProviders } from "../../test-utils/test-utils";
+import {Route} from "react-router-dom";
+import ModalForm from "../ModalForm/ModalForm";
+
 
 const mockStore = configureStore([]);
 const fakeData = [{
@@ -33,10 +38,12 @@ describe('Profiles', () => {
       .mockImplementation((url) => {
           switch (url) {
             case '/api/profile/':
-              return Promise.resolve({ json: () => Promise.resolve(data.users) });
-            case '/api/profile/all':
-              return Promise.resolve({ json: () => Promise.resolve(data.profiles) });
-            default:
+              return Promise.resolve({ json: () => Promise.resolve(fakeData) });
+            case '/api/profile/617c0b1507d9aa367606e805':
+              return Promise.resolve({ json: () => Promise.resolve(fakeData) });
+            case '/api/profile/delete':
+              return Promise.resolve({ json: () => Promise.resolve({ message: 'Profile Deleted' }) });
+              default:
               break
           }
         }
@@ -47,22 +54,20 @@ describe('Profiles', () => {
     jest.restoreAllMocks();
   });
 
-  it('renders profiles',async () => {
+  it('renders all profiles',async () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState')
     useStateSpy.mockImplementation((init) => [init, setState]);
 
-    act(() => {
-      component = render(
-        <Router>
-          <AuthContext.Provider value={{}}>
-            <Provider store={store}>
-              <Profiles/>
-            </Provider>
-          </AuthContext.Provider>
-        </Router>
-      )
-    });
+    component = render(
+      <Router>
+        <AuthContext.Provider value={{}}>
+          <Provider store={store}>
+            <Profiles/>
+          </Provider>
+        </AuthContext.Provider>
+      </Router>
+    )
 
 
     await waitFor(() => {
@@ -71,6 +76,57 @@ describe('Profiles', () => {
       expect(component.getByText(fakeData[0].birthdate.split('-').reverse().join('.'))).toBeInTheDocument();
       expect(component.getByText(fakeData[0].city)).toBeInTheDocument();
       expect(setState).toBeCalled();
+    })
+  });
+
+  it('renders user profiles',async () => {
+    const setState = jest.fn();
+    const useStateSpy = jest.spyOn(React, 'useState')
+    useStateSpy.mockImplementation((init) => [init, setState]);
+
+    const { getByText } = renderWithProviders(
+      <Route path="/user/:id">
+        <AuthContext.Provider value={{}}>
+          <Provider store={store}>
+            <Profiles/>
+          </Provider>
+        </AuthContext.Provider>
+      </Route>,
+      {
+        route: "/user/617c0b1507d9aa367606e805"
+      }
+    );
+
+    await waitFor(() => {
+      expect(getByText(fakeData[0].name)).toBeInTheDocument();
+      expect(getByText(fakeData[0].gender)).toBeInTheDocument();
+      expect(getByText(fakeData[0].birthdate.split('-').reverse().join('.'))).toBeInTheDocument();
+      expect(getByText(fakeData[0].city)).toBeInTheDocument();
+      expect(setState).toBeCalled();
+    })
+  });
+
+  it('profile should be deleted', async () => {
+    const setState = jest.fn();
+    const useStateSpy = jest.spyOn(React, 'useState')
+    useStateSpy.mockImplementation((init) => [init, setState]);
+
+    const { getByText } = renderWithProviders(
+      <Route path="/user/:id">
+        <AuthContext.Provider value={{}}>
+          <Provider store={store}>
+            <Profiles/>
+          </Provider>
+        </AuthContext.Provider>
+      </Route>,
+      {
+        route: "/user/617c0b1507d9aa367606e805"
+      }
+    );
+
+    await waitFor(() => {
+      fireEvent.click(component.getByTestId('profiles-delete'));
+      expect(component.getByText('Profile Deleted')).toBeTruthy();
     })
   });
 });

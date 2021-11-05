@@ -4,9 +4,8 @@ import {fireEvent, render, waitFor} from '@testing-library/react';
 import {AuthContext} from "../../context/AuthContext";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import {BrowserRouter} from "react-router-dom";
-// import ReactRouter from 'react-router-dom';
-// import Router from "react-router-dom";
+import {BrowserRouter, Router} from "react-router-dom";
+import {createMemoryHistory} from "history";
 
 const mockStore = configureStore([]);
 const fakeData = {
@@ -20,17 +19,7 @@ const fakeData = {
 describe('UserDetail', () => {
   let store;
   const logout = jest.fn();
-
-  // Object.defineProperty(ReactRouter, "useLocation", {
-  //   value: jest.fn(),
-  //   configurable: true,
-  //   writable: true,
-  // });
-
-  // jest.mock("react-router-dom", () => ({
-  //   ...jest.requireActual("react-router-dom"),
-  //   useParams: jest.fn(),
-  // }));
+  const history = createMemoryHistory();
 
   beforeEach(() => {
     store = mockStore({
@@ -40,9 +29,17 @@ describe('UserDetail', () => {
       },
     });
     jest.spyOn(global, 'fetch')
-      .mockImplementation(() =>
-        Promise.resolve({ json: () => Promise.resolve(fakeData) })
-      )
+      .mockImplementation((url) => {
+          switch (url) {
+            case '/api/user/undefined':
+              return Promise.resolve({ json: () => Promise.resolve(fakeData) });
+            case '/api/user/delete':
+              return Promise.resolve({ json: () => Promise.resolve(fakeData) });
+            default:
+              break
+          }
+        }
+      );
   });
 
   afterEach(() => {
@@ -54,7 +51,7 @@ describe('UserDetail', () => {
     const useStateSpy = jest.spyOn(React, 'useState')
     useStateSpy.mockImplementation((init) => [init, setState]);
 
-    const {getByText} = render(
+    const { getByText } = render(
       <BrowserRouter>
         <AuthContext.Provider value={{token: "", logout}}>
           <Provider store={store}>
@@ -72,43 +69,24 @@ describe('UserDetail', () => {
      })
   });
 
-  // it('user should be deleted', async () => {
-  //   // jest.mock('react-router-dom', () => ({
-  //   //   ...jest.requireActual('react-router-dom'), // use actual for all non-hook parts
-  //   //   useParams: () => ({
-  //   //     id: '617c0b1507d9aa367606e805'
-  //   //   }),
-  //   //   useRouteMatch: () => ({ url: '/user/id' }),
-  //   // }));
-  //
-  //   // jest.spyOn(ReactRouter, 'useParams')
-  //   //   .mockReturnValue({ id: '617c0b1507d9aa367606e805' });
-  //
-  //   // jest.mock('react-router', () => ({
-  //   //   useParams: jest.fn().mockReturnValue({ id: '617c0b1507d9aa367606e805' }),
-  //   // }));
-  //
-  //   // jest.spyOn(Router, 'useParams').mockReturnValue({ id: '617c0b1507d9aa367606e805' })
-  //
-  //   // jest.mock('react-router-dom', () => {
-  //   //   return {
-  //   //     useParams: () => ({
-  //   //       id: '617c0b1507d9aa367606e805'
-  //   //     })
-  //   //   }
-  //   // })
-  //
-  //   const {getByTestId} = render(
-  //         <AuthContext.Provider value={{}}>
-  //           <Provider store={store}>
-  //             <UserDetail/>
-  //           </Provider>
-  //         </AuthContext.Provider>
-  //   );
-  //
-  //   await waitFor(() => {
-  //     fireEvent.click(getByTestId('delete'));
-  //     expect(history.location.pathname).toBe('/');
-  //   })
-  // })
+  it('user should be deleted', async () => {
+    const setState = jest.fn();
+    const useStateSpy = jest.spyOn(React, 'useState')
+    useStateSpy.mockImplementation((init) => [init, setState]);
+
+    const {getByTestId} = render(
+      <Router history={history}>
+        <AuthContext.Provider value={{token: "", logout}}>
+          <Provider store={store}>
+            <UserDetail/>
+          </Provider>
+        </AuthContext.Provider>
+      </Router>
+    );
+
+    await waitFor(() => {
+      fireEvent.click(getByTestId('delete'));
+      expect(history.location.pathname).toBe('/');
+    })
+  });
 });
